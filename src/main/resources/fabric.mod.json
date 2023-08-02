@@ -1,30 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "customviewbob",
+  "id": "viewboboptions",
   "version": "${version}",
-  "name": "Custom View Bobbing",
+  "name": "View Bobbing Options",
   "description": "View Bobbing Options as it should have been.",
   "authors": [ "GravityIO" ],
   "contact": {
-    "sources": "https://github.com/GravityCY/CustomViewBobbing",
-    "issues": "https://github.com/GravityCY/CustomViewBobbing"
+    "sources": "https://github.com/GravityCY/ViewBobbingOptions",
+    "issues": "https://github.com/GravityCY/ViewBobbingOptions"
   },
   "license": "MIT",
-  "icon": "assets/customviewbob/icon.png",
+  "icon": "assets/viewboboptions/icon.png",
   "environment": "client",
   "entrypoints": {
     "preLaunch": [
-      "me.gravityio.customviewbob.CustomViewBobbing"
+      "me.gravityio.viewboboptions.ViewBobbingOptions"
     ],
     "client": [
-      "me.gravityio.customviewbob.CustomViewBobbing"
+      "me.gravityio.viewboboptions.ViewBobbingOptions"
     ],
     "modmenu": [
-      "me.gravityio.customviewbob.compat.ModMenuApiImpl"
+      "me.gravityio.viewboboptions.compat.ModMenuApiImpl"
     ]
   },
   "mixins": [
-    "customviewbob.mixins.json"
+    "viewboboptions.mixins.json",
+    "compat.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

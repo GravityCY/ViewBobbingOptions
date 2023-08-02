@@ -1,15 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.gravityio.customviewbob.mixin.mod",
+  "package": "me.gravityio.viewboboptions.mixin.compat",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "VideoOptionsScreenMixin",
-    "ViewBobbingMixin",
     "IrisHandRendererMixin",
     "SodiumGeneralCategoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
+  }
 }

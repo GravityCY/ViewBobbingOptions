@@ -1,4 +1,4 @@
-package me.gravityio.customviewbob.ui;
+package me.gravityio.viewboboptions.ui;
 
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;

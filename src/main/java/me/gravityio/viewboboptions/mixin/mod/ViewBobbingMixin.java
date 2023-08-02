@@ -1,8 +1,8 @@
-package me.gravityio.customviewbob.mixin.mod;
+package me.gravityio.viewboboptions.mixin.mod;
 
-import me.gravityio.customviewbob.mixin.BobType;
-import me.gravityio.customviewbob.ModConfig;
-import me.gravityio.customviewbob.mixin.TransientMixinData;
+import me.gravityio.viewboboptions.mixin.BobType;
+import me.gravityio.viewboboptions.ModConfig;
+import me.gravityio.viewboboptions.mixin.TransientMixinData;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class ViewBobbingMixin {
-    @Unique
 
     @ModifyVariable(
             method = "bobView",

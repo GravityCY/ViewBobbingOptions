@@ -1,7 +1,7 @@
-package me.gravityio.customviewbob.mixin.mod;
+package me.gravityio.viewboboptions.mixin.compat;
 
-import me.gravityio.customviewbob.mixin.BobType;
-import me.gravityio.customviewbob.mixin.TransientMixinData;
+import me.gravityio.viewboboptions.mixin.BobType;
+import me.gravityio.viewboboptions.mixin.TransientMixinData;
 import net.coderbot.iris.pipeline.HandRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;

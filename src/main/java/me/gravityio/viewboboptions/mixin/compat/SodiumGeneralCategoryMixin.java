@@ -1,8 +1,8 @@
-package me.gravityio.customviewbob.mixin.mod;
+package me.gravityio.viewboboptions.mixin.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.gravityio.customviewbob.CustomViewBobbing;
-import me.gravityio.customviewbob.ModConfig;
+import me.gravityio.viewboboptions.ViewBobbingOptions;
+import me.gravityio.viewboboptions.ModConfig;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
@@ -40,8 +40,8 @@ public class SodiumGeneralCategoryMixin {
         var storage = new OptionStorage<ModConfig>() {
             @Override
             public ModConfig getData() {
-                CustomViewBobbing.LOGGER.info(String.valueOf(ModConfig.INSTANCE));
-                CustomViewBobbing.LOGGER.info(String.valueOf(ModConfig.GSON.getConfig()));
+                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.INSTANCE));
+                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.GSON.getConfig()));
 
                 return ModConfig.INSTANCE;
             }
@@ -57,13 +57,13 @@ public class SodiumGeneralCategoryMixin {
                     .setName(Text.translatable("options.customviewbob.hand_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.customviewbob.hand_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.set_hand_bobbing_strength(v), config -> ModConfig.INSTANCE.get_hand_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.hand_bobbing_strength(v), config -> ModConfig.INSTANCE.hand_bobbing_strength())
                     .build();
             var cameraOpt = OptionImpl.createBuilder(int.class, storage)
                     .setName(Text.translatable("options.customviewbob.camera_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.customviewbob.camera_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.set_camera_bobbing_strength(v), config -> ModConfig.INSTANCE.get_camera_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.camera_bobbing_strength(v), config -> ModConfig.INSTANCE.camera_bobbing_strength())
                     .build();
             original.add(handOpt).add(cameraOpt);
         } else {
@@ -71,7 +71,7 @@ public class SodiumGeneralCategoryMixin {
                     .setName(Text.translatable("options.customviewbob.all_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.customviewbob.all_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.set_all_bobbing_strength(v), config -> ModConfig.INSTANCE.get_all_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.all_bobbing_strength(v), config -> ModConfig.INSTANCE.all_bobbing_strength())
                     .build();
             original.add(allOpt);
         }

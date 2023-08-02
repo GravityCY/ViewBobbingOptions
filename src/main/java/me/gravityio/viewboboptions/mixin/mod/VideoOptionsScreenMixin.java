@@ -1,7 +1,7 @@
-package me.gravityio.customviewbob.mixin.mod;
+package me.gravityio.viewboboptions.mixin.mod;
 
-import me.gravityio.customviewbob.ModConfig;
-import me.gravityio.customviewbob.ModOptions;
+import me.gravityio.viewboboptions.ModConfig;
+import me.gravityio.viewboboptions.VanillaOptions;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
@@ -29,10 +29,11 @@ public class VideoOptionsScreenMixin extends GameOptionsScreen {
         if (!ModConfig.INSTANCE.show_in_options) return;
 
         if (ModConfig.INSTANCE.separate_bobs) {
-            this.list.addOptionEntry(ModOptions.HAND_BOBBING_STRENGTH, ModOptions.CAMERA_BOBBING_STRENGTH);
+            this.list.addOptionEntry(VanillaOptions.HAND_BOBBING_STRENGTH, VanillaOptions.CAMERA_BOBBING_STRENGTH);
         } else {
-            this.list.addOptionEntry(ModOptions.ALL_BOBBING_STRENGTH, null);
+            this.list.addOptionEntry(VanillaOptions.ALL_BOBBING_STRENGTH, null);
         }
+
     }
 
     @Inject(method = "method_19865", at = @At("HEAD"))
@@ -40,11 +41,12 @@ public class VideoOptionsScreenMixin extends GameOptionsScreen {
         if (!ModConfig.INSTANCE.show_in_options) return;
 
         if (ModConfig.INSTANCE.separate_bobs) {
-            ModConfig.INSTANCE.hand_bobbing_strength = ModOptions.HAND_BOBBING_STRENGTH.getValue();
-            ModConfig.INSTANCE.camera_bobbing_strength = ModOptions.CAMERA_BOBBING_STRENGTH.getValue();
+            ModConfig.INSTANCE.hand_bobbing_strength(VanillaOptions.HAND_BOBBING_STRENGTH.getValue());
+            ModConfig.INSTANCE.camera_bobbing_strength(VanillaOptions.CAMERA_BOBBING_STRENGTH.getValue());
         } else {
-            ModConfig.INSTANCE.all_bobbing_strength = ModOptions.ALL_BOBBING_STRENGTH.getValue();
+            ModConfig.INSTANCE.all_bobbing_strength(VanillaOptions.ALL_BOBBING_STRENGTH.getValue());
         }
+
         ModConfig.GSON.save();
     }
 

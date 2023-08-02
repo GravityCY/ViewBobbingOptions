@@ -1,10 +1,10 @@
-package me.gravityio.customviewbob.ui;
+package me.gravityio.viewboboptions.ui;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.gui.controllers.BooleanController;
 import dev.isxander.yacl3.gui.controllers.slider.IntegerSliderController;
-import me.gravityio.customviewbob.ModConfig;
+import me.gravityio.viewboboptions.ModConfig;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -15,20 +15,20 @@ import java.util.function.Supplier;
 
 public class ConfigScreen {
 
-    private static final Text TITLE = Text.translatable("config.customviewbob.title");
-    private static final Text MAIN_CATEGORY = Text.translatable("config.customviewbob.title");
-    private static final Text SHOW_IN_OPTIONS_LABEL = Text.translatable("config.customviewbob.show_in_options.label");
-    private static final Text SHOW_IN_OPTIONS_DESCRIPTION = Text.translatable("config.customviewbob.show_in_options.description");
-    private static final Text SHOW_IN_OPTIONS_ON = Text.translatable("config.customviewbob.show_in_options.on");
-    private static final Text SHOW_IN_OPTIONS_OFF = Text.translatable("config.customviewbob.show_in_options.off");
-    private static final Text SEPARATE_BOB_LABEL = Text.translatable("config.customviewbob.seperate_bob.label");
-    private static final Text SEPARATE_BOB_DESCRIPTION = Text.translatable("config.customviewbob.seperate_bob.description");
-    private static final Text ALL_BOB_LABEL = Text.translatable("config.customviewbob.all_bob.label");
-    private static final Text ALL_BOB_DESCRIPTION = Text.translatable("config.customviewbob.all_bob.description");
-    private static final Text HAND_BOB_LABEL = Text.translatable("config.customviewbob.hand_bob.label");
-    private static final Text HAND_BOB_DESCRIPTION = Text.translatable("config.customviewbob.hand_bob.description");
-    private static final Text CAMERA_BOB_LABEL = Text.translatable("config.customviewbob.camera_bob.label");
-    private static final Text CAMERA_BOB_DESCRIPTION = Text.translatable("config.customviewbob.camera_bob.description");
+    private static final Text TITLE = Text.translatable("config.viewboboptions.title");
+    private static final Text MAIN_CATEGORY = Text.translatable("config.viewboboptions.title");
+    private static final Text SHOW_IN_OPTIONS_LABEL = Text.translatable("config.viewboboptions.show_in_options.label");
+    private static final Text SHOW_IN_OPTIONS_DESCRIPTION = Text.translatable("config.viewboboptions.show_in_options.description");
+    private static final Text SHOW_IN_OPTIONS_ON = Text.translatable("config.viewboboptions.show_in_options.on");
+    private static final Text SHOW_IN_OPTIONS_OFF = Text.translatable("config.viewboboptions.show_in_options.off");
+    private static final Text SEPARATE_BOB_LABEL = Text.translatable("config.viewboboptions.seperate_bob.label");
+    private static final Text SEPARATE_BOB_DESCRIPTION = Text.translatable("config.viewboboptions.seperate_bob.description");
+    private static final Text ALL_BOB_LABEL = Text.translatable("config.viewboboptions.all_bob.label");
+    private static final Text ALL_BOB_DESCRIPTION = Text.translatable("config.viewboboptions.all_bob.description");
+    private static final Text HAND_BOB_LABEL = Text.translatable("config.viewboboptions.hand_bob.label");
+    private static final Text HAND_BOB_DESCRIPTION = Text.translatable("config.viewboboptions.hand_bob.description");
+    private static final Text CAMERA_BOB_LABEL = Text.translatable("config.viewboboptions.camera_bob.label");
+    private static final Text CAMERA_BOB_DESCRIPTION = Text.translatable("config.viewboboptions.camera_bob.description");
 
 
     public static Screen getModConfigScreenFactory(Screen parent) {
@@ -44,9 +44,9 @@ public class ConfigScreen {
                 handBobSlider.setAvailable(v);
                 cameraBobSlider.setAvailable(v);
             });
-            allBobSlider.setAvailable(!config.get_separate_bobs());
-            handBobSlider.setAvailable(config.get_separate_bobs());
-            cameraBobSlider.setAvailable(config.get_separate_bobs());
+            allBobSlider.setAvailable(!config.separate_bobs());
+            handBobSlider.setAvailable(config.separate_bobs());
+            cameraBobSlider.setAvailable(config.separate_bobs());
             var category = TestBuilder.create()
                     .name(MAIN_CATEGORY)
                     .option(
@@ -69,7 +69,7 @@ public class ConfigScreen {
                 SHOW_IN_OPTIONS_LABEL, SHOW_IN_OPTIONS_DESCRIPTION,
                 SHOW_IN_OPTIONS_ON, SHOW_IN_OPTIONS_OFF,
                 defaults.show_in_options,
-                config::get_show_in_options, config::set_show_in_options
+                config::show_in_options, config::show_in_options
         );
     }
 
@@ -78,7 +78,7 @@ public class ConfigScreen {
                 SEPARATE_BOB_LABEL, SEPARATE_BOB_DESCRIPTION,
                 null, null,
                 defaults.separate_bobs,
-                config::get_separate_bobs, config::set_separate_bobs
+                config::separate_bobs, config::separate_bobs
         );
     }
 
@@ -86,7 +86,7 @@ public class ConfigScreen {
         return createSimpleSlider(
                 ALL_BOB_LABEL, ALL_BOB_DESCRIPTION,
                 defaults.all_bobbing_strength, 0, 100,
-                config::get_all_bobbing_strength, config::set_all_bobbing_strength
+                config::all_bobbing_strength, config::all_bobbing_strength
         );
     }
 
@@ -94,7 +94,7 @@ public class ConfigScreen {
         return createSimpleSlider(
                 HAND_BOB_LABEL, HAND_BOB_DESCRIPTION,
                 defaults.hand_bobbing_strength, 0, 100,
-                config::get_hand_bobbing_strength, config::set_hand_bobbing_strength
+                config::hand_bobbing_strength, config::hand_bobbing_strength
         );
     }
 
@@ -102,7 +102,7 @@ public class ConfigScreen {
         return createSimpleSlider(
                 CAMERA_BOB_LABEL, CAMERA_BOB_DESCRIPTION,
                 defaults.camera_bobbing_strength, 0, 100,
-                config::get_camera_bobbing_strength, config::set_camera_bobbing_strength
+                config::camera_bobbing_strength, config::camera_bobbing_strength
         );
     }
 

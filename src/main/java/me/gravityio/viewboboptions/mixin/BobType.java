@@ -1,4 +1,4 @@
-package me.gravityio.customviewbob.mixin;
+package me.gravityio.viewboboptions.mixin;
 
 public enum BobType {
         HAND, CAMERA, NONE;
