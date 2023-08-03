@@ -54,14 +54,14 @@ public class SodiumGeneralCategoryMixin {
 
         if (ModConfig.INSTANCE.separate_bobs) {
             var handOpt = OptionImpl.createBuilder(int.class, storage)
-                    .setName(Text.translatable("options.customviewbob.hand_bobbing_strength.label"))
-                    .setTooltip(Text.translatable("options.customviewbob.hand_bobbing_strength.description"))
+                    .setName(Text.translatable("options.viewboboptions.hand_bobbing_strength.label"))
+                    .setTooltip(Text.translatable("options.viewboboptions.hand_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
                     .setBinding((config, v) -> ModConfig.INSTANCE.hand_bobbing_strength(v), config -> ModConfig.INSTANCE.hand_bobbing_strength())
                     .build();
             var cameraOpt = OptionImpl.createBuilder(int.class, storage)
-                    .setName(Text.translatable("options.customviewbob.camera_bobbing_strength.label"))
-                    .setTooltip(Text.translatable("options.customviewbob.camera_bobbing_strength.description"))
+                    .setName(Text.translatable("options.viewboboptions.camera_bobbing_strength.label"))
+                    .setTooltip(Text.translatable("options.viewboboptions.camera_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
                     .setBinding((config, v) -> ModConfig.INSTANCE.camera_bobbing_strength(v), config -> ModConfig.INSTANCE.camera_bobbing_strength())
                     .build();

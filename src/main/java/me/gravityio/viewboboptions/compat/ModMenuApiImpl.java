@@ -4,7 +4,6 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.gravityio.viewboboptions.ModConfig;
 import me.gravityio.viewboboptions.lib.yacl.ConfigScreenBuilder;
-import me.gravityio.viewboboptions.ui.ConfigScreen;
 
 public class ModMenuApiImpl implements ModMenuApi {
 

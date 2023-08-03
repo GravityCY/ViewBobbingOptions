@@ -8,5 +8,7 @@ import java.util.Map;
  * Needs to be implemented by a Config
  */
 public interface ConfigScreenFrame {
-    default void onFinishingTouches(Map<String, Option<?>> options) {}
+    default void onBeforeBuildOptions(Map<String, Option.Builder<?>> options) {};
+    default void onAfterBuildOptions(Map<String, Option<?>> options) {}
+
 }

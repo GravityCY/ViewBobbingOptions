@@ -18,7 +18,7 @@ public class ModConfig implements ConfigScreenFrame {
             .build();
 
     @Override
-    public void onFinishingTouches(Map<String, Option<?>> options) {
+    public void onAfterBuildOptions(Map<String, Option<?>> options) {
         var opt_separate_bobs = (Option<Boolean>) options.get("separate_bobs");
         var opt_all_bob = (Option<Integer>) options.get("all_bobbing_strength");
         var opt_hand_bob = (Option<Integer>) options.get("hand_bobbing_strength");
@@ -40,23 +40,23 @@ public class ModConfig implements ConfigScreenFrame {
     public static ModConfig INSTANCE;
 
     @ConfigEntry
-    @ScreenOption
+    @ScreenOption(index = 0)
     @BooleanToggle(useCustomFormatter = true)
     public boolean show_in_options = true;
     @ConfigEntry
-    @ScreenOption
+    @ScreenOption(index = 1)
     @BooleanToggle(useCustomFormatter = true)
     public boolean separate_bobs = true;
     @ConfigEntry
-    @ScreenOption
+    @ScreenOption(index = 2)
     @WholeSlider
     public int all_bobbing_strength = 100;
     @ConfigEntry
-    @ScreenOption
+    @ScreenOption(index = 3)
     @WholeSlider
     public int hand_bobbing_strength = 100;
     @ConfigEntry
-    @ScreenOption
+    @ScreenOption(index = 4)
     @WholeSlider
     public int camera_bobbing_strength = 100;
 
@@ -95,6 +95,13 @@ public class ModConfig implements ConfigScreenFrame {
 
     }
     @Setter
+    public void all_bobbing_strength(int all_bobbing_strength) {
+        this.all_bobbing_strength = all_bobbing_strength;
+        hand_bobbing_strength(all_bobbing_strength);
+        camera_bobbing_strength(all_bobbing_strength);
+        VanillaOptions.ALL_BOBBING_STRENGTH.setValue(all_bobbing_strength);
+    }
+    @Setter
     public void hand_bobbing_strength(int hand_bobbing_strength) {
         this.hand_bobbing_strength = hand_bobbing_strength;
         VanillaOptions.HAND_BOBBING_STRENGTH.setValue(hand_bobbing_strength);
@@ -106,12 +113,5 @@ public class ModConfig implements ConfigScreenFrame {
         VanillaOptions.CAMERA_BOBBING_STRENGTH.setValue(camera_bobbing_strength);
 
     }
-    @Setter
-    public void all_bobbing_strength(int all_bobbing_strength) {
-        this.all_bobbing_strength = all_bobbing_strength;
-        hand_bobbing_strength(all_bobbing_strength);
-        camera_bobbing_strength(all_bobbing_strength);
-        VanillaOptions.ALL_BOBBING_STRENGTH.setValue(all_bobbing_strength);
 
-    }
 }

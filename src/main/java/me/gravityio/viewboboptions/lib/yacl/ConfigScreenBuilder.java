@@ -8,6 +8,7 @@ import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.config.ConfigInstance;
 import dev.isxander.yacl3.gui.controllers.BooleanController;
 import dev.isxander.yacl3.gui.controllers.slider.IntegerSliderController;
+import me.gravityio.viewboboptions.ViewBobbingOptions;
 import me.gravityio.viewboboptions.lib.yacl.annotations.*;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -32,6 +33,20 @@ public class ConfigScreenBuilder {
 
     private static boolean isValidField(Field field) {
         return field.isAnnotationPresent(ScreenOption.class);
+    }
+    
+    private static List<Field> getOrderedOptionFields(Class<?> conclass) {
+        List<Field> out = new ArrayList<>();
+        var fields = conclass.getDeclaredFields();
+        for (Field field : fields) {
+            if (!isValidField(field)) continue;
+            out.add(field);
+        }
+        out.sort(Comparator.comparingInt(field -> {
+            ScreenOption optionAnnot = field.getAnnotation(ScreenOption.class);
+            return optionAnnot.index();
+        }));
+        return out;
     }
 
     /**
@@ -97,7 +112,7 @@ public class ConfigScreenBuilder {
     /**
      * Gets the actual YACL Option using the OptionData
      */
-    private static Option<?> getOption(OptionData option) {
+    private static Option.Builder<?> getOption(OptionData option) {
         if (!isValidOption(option.field)) return null;
 
         Option.Builder<?> builder = Option.createBuilder();
@@ -133,7 +148,7 @@ public class ConfigScreenBuilder {
                     .binding((Integer) option.def(), () -> (Integer) option.getter.get(), option.setter::accept);
 
         }
-        return builder == null ? null : builder.build();
+        return builder == null ? null : builder;
     }
 
     private static Object doGetField(Object instance, Field field) {
@@ -158,17 +173,23 @@ public class ConfigScreenBuilder {
             var category = ConfigCategory.createBuilder()
                     .name(Text.translatable("yacl.%s.title".formatted(namespace)));
 
-            var fields = conclass.getDeclaredFields();
-            var options = new HashMap<String, Option<?>>();
-            for (Field field : fields) {
-                if (!isValidField(field)) continue;
-                var data = OptionData.fromField(config, field);
+            Map<String, Option.Builder<?>> unbuiltOptionsMap = new LinkedHashMap<>();
+            Map<String, Option<?>> builtOptionsMap = new LinkedHashMap<>();
+            var orderedOptionFields = getOrderedOptionFields(conclass);
+            for (Field optionField : orderedOptionFields) {
+                var data = OptionData.fromField(d, config, optionField);
                 var option = getOption(data);
-                options.put(data.id, option);
-                category.option(option);
+                unbuiltOptionsMap.put(data.id, option);
             }
 
-            config.onFinishingTouches(options);
+            config.onBeforeBuildOptions(unbuiltOptionsMap);
+            for (Map.Entry<String, Option.Builder<?>> entry : unbuiltOptionsMap.entrySet()) {
+                builtOptionsMap.put(entry.getKey(), entry.getValue().build());
+            }
+            config.onAfterBuildOptions(builtOptionsMap);
+            for (Option<?> value : builtOptionsMap.values())
+                category.option(value);
+
 
             builder.title(Text.translatable("yacl.%s.title".formatted(namespace)));
             builder.category(category.build());
@@ -206,8 +227,8 @@ public class ConfigScreenBuilder {
             return format.formatted(namespace, id);
         }
 
-        public static OptionData fromField(Object instance, Field field) {
-            var conclass = instance.getClass();
+        public static OptionData fromField(Object defConfig, Object configInstance, Field field) {
+            var conclass = configInstance.getClass();
 
             var methods = conclass.getDeclaredMethods();
 
@@ -224,11 +245,11 @@ public class ConfigScreenBuilder {
 
             if (id == null) id = field.getName();
 
-            var def = doGetField(instance, field);
+            var def = doGetField(defConfig, field);
             var getter = getGetterMethod(methods, id);
             var setter = getSetterMethod(methods, id);
-            var supplier = getSupplier(instance, getter);
-            var consumer = getConsumer(instance, setter);
+            var supplier = getSupplier(configInstance, getter);
+            var consumer = getConsumer(configInstance, setter);
             return new OptionData(namespace, id, keyLabel, keyDescription, def, field, supplier, consumer);
         }
     }

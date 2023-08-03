@@ -27,4 +27,9 @@ public @interface ScreenOption {
      * Overrides the automatically generated Translatable Text Description to use this explicit key
      */
     String descriptionKey() default "";
+
+    /**
+     * Used to add the fields in this order to the GUI
+     */
+    int index();
 }
