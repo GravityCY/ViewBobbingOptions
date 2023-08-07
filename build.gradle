@@ -41,14 +41,18 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl}"
+    modImplementation("dev.isxander:yet-another-config-lib:${project.yacl}") {
+        exclude(group: "com.terraformersmc")
+    }
     // Mod Menu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     // Sodium
-    modCompileOnly "maven.modrinth:sodium:mc1.19.4-0.4.10"
+    modCompileOnly "maven.modrinth:sodium:mc1.19.2-0.4.4"
     // Iris
-    modCompileOnly "maven.modrinth:iris:1.6.4+1.19.4"
+    modCompileOnly "maven.modrinth:iris:1.6.0+1.19.2"
+
+//    modLocalRuntime "maven.modrinth:sodium:mc1.19.2-0.4.4"
+//    modLocalRuntime "maven.modrinth:iris:1.6.0+1.19.2"
 
     implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:0.1.1"

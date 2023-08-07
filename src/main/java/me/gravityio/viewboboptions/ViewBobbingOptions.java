@@ -13,12 +13,13 @@ public class ViewBobbingOptions implements ClientModInitializer, PreLaunchEntryp
     @Override
     public void onPreLaunch() {
         MixinExtrasBootstrap.init();
+        ModConfig.GSON.load();
         ModConfig.INSTANCE = ModConfig.GSON.getConfig();
     }
 
     @Override
     public void onInitializeClient() {
-
+        ModConfig.INSTANCE.update();
     }
 
 

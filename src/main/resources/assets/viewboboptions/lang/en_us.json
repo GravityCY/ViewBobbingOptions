@@ -1,5 +1,5 @@
 {
-  "yacl.viewboboptions.title": "Custom View Bobbing",
+  "yacl.viewboboptions.title": "View Bobbing Options",
 
   "yacl.viewboboptions.show_in_options.label": "Show in Options",
   "yacl.viewboboptions.show_in_options.description": "Whether to also show the sliders in the Vanilla Video Options Menu.",
@@ -19,12 +19,21 @@
   "yacl.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing Strength",
   "yacl.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving.",
 
-  "options.viewboboptions.all_bobbing_strength.label": "View Bobbing Strength",
-  "options.viewboboptions.all_bobbing_strength.description": "How much the hand model and the camera model shakes when moving.",
+  "options.sodium.viewboboptions.all_bobbing_strength.label": "View Bobbing Strength",
+  "options.sodium.viewboboptions.all_bobbing_strength.description": "How much the hand model and the camera model shakes when moving.",
 
-  "options.viewboboptions.hand_bobbing_strength.label": "Hand Bobbing Strength",
-  "options.viewboboptions.hand_bobbing_strength.description": "How much the hand model shakes when moving.",
+  "options.sodium.viewboboptions.hand_bobbing_strength.label": "Hand Bobbing Strength",
+  "options.sodium.viewboboptions.hand_bobbing_strength.description": "How much the hand model shakes when moving.",
 
-  "options.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing Strength",
-  "options.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving."
+  "options.sodium.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing Strength",
+  "options.sodium.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving.",
+
+  "options.vanilla.viewboboptions.all_bobbing_strength.label": "View Bobbing",
+  "options.vanilla.viewboboptions.all_bobbing_strength.description": "How much the hand model and the camera model shakes when moving.",
+
+  "options.vanilla.viewboboptions.hand_bobbing_strength.label": "Hand Bobbing",
+  "options.vanilla.viewboboptions.hand_bobbing_strength.description": "How much the hand model shakes when moving.",
+
+  "options.vanilla.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing",
+  "options.vanilla.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving."
 }

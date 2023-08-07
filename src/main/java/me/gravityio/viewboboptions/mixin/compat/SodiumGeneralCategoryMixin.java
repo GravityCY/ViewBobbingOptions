@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.Slice;
 @Pseudo
 @Mixin(value = SodiumGameOptionPages.class, remap = false)
 public class SodiumGeneralCategoryMixin {
-    @Shadow @Final private static MinecraftOptionsStorage vanillaOpts;
-
     @ModifyExpressionValue(method = "general",
             at = @At(
                     value = "INVOKE",
@@ -45,28 +43,28 @@ public class SodiumGeneralCategoryMixin {
 
             @Override
             public void save() {
-
+                ModConfig.INSTANCE.save();
             }
         };
 
         if (ModConfig.INSTANCE.separate_bobs) {
             var handOpt = OptionImpl.createBuilder(int.class, storage)
-                    .setName(Text.translatable("options.viewboboptions.hand_bobbing_strength.label"))
-                    .setTooltip(Text.translatable("options.viewboboptions.hand_bobbing_strength.description"))
+                    .setName(Text.translatable("options.sodium.viewboboptions.hand_bobbing_strength.label"))
+                    .setTooltip(Text.translatable("options.sodium.viewboboptions.hand_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
                     .setBinding((config, v) -> ModConfig.INSTANCE.hand_bobbing_strength(v), config -> ModConfig.INSTANCE.hand_bobbing_strength())
                     .build();
             var cameraOpt = OptionImpl.createBuilder(int.class, storage)
-                    .setName(Text.translatable("options.viewboboptions.camera_bobbing_strength.label"))
-                    .setTooltip(Text.translatable("options.viewboboptions.camera_bobbing_strength.description"))
+                    .setName(Text.translatable("options.sodium.viewboboptions.camera_bobbing_strength.label"))
+                    .setTooltip(Text.translatable("options.sodium.viewboboptions.camera_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
                     .setBinding((config, v) -> ModConfig.INSTANCE.camera_bobbing_strength(v), config -> ModConfig.INSTANCE.camera_bobbing_strength())
                     .build();
             original.add(handOpt).add(cameraOpt);
         } else {
             var allOpt = OptionImpl.createBuilder(int.class, storage)
-                    .setName(Text.translatable("options.customviewbob.all_bobbing_strength.label"))
-                    .setTooltip(Text.translatable("options.customviewbob.all_bobbing_strength.description"))
+                    .setName(Text.translatable("options.sodium.viewboboptions.all_bobbing_strength.label"))
+                    .setTooltip(Text.translatable("options.sodium.viewboboptions.all_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
                     .setBinding((config, v) -> ModConfig.INSTANCE.all_bobbing_strength(v), config -> ModConfig.INSTANCE.all_bobbing_strength())
                     .build();
