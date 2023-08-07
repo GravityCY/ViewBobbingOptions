@@ -32,8 +32,7 @@ public class ViewBobbingMixin {
         };
     }
 
-    @Inject(method = "renderHand",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;loadProjectionMatrix(Lorg/joml/Matrix4f;)V"))
+    @Inject(method = "renderHand",at = @At(value = "HEAD"))
     private void setHandBobType(MatrixStack matrices, Camera camera, float tickDelta, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.HAND;
     }

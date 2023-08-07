@@ -40,15 +40,12 @@ public class SodiumGeneralCategoryMixin {
         var storage = new OptionStorage<ModConfig>() {
             @Override
             public ModConfig getData() {
-                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.INSTANCE));
-                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.GSON.getConfig()));
-
                 return ModConfig.INSTANCE;
             }
 
             @Override
             public void save() {
-                ModConfig.GSON.save();
+
             }
         };
 
