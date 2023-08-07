@@ -1,17 +1,16 @@
 package me.gravityio.viewboboptions.mixin.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.gravityio.viewboboptions.ViewBobbingOptions;
 import me.gravityio.viewboboptions.ModConfig;
 import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
 import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
 
