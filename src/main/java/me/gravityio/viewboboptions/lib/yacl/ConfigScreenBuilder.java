@@ -145,7 +145,7 @@ public class ConfigScreenBuilder {
                     .binding((Integer) option.def(), () -> (Integer) option.getter.get(), option.setter::accept);
 
         }
-        return builder == null ? null : builder;
+        return builder;
     }
 
     private static Object doGetField(Object instance, Field field) {
@@ -166,34 +166,33 @@ public class ConfigScreenBuilder {
         var configAnnot = conclass.getAnnotation(Config.class);
         var namespace = configAnnot.namespace();
 
-        var builder = YetAnotherConfigLib.createBuilder();
-        var def = instance.getDefaults();
-        builder.save(ModConfig.INSTANCE::save);
-        var category = ConfigCategory.createBuilder()
-                .name(Text.translatable("yacl.%s.title".formatted(namespace)));
+        return YetAnotherConfigLib.create(instance, (def, conf, builder) -> {
+            builder.save(ModConfig.INSTANCE::save);
+            var category = ConfigCategory.createBuilder()
+                    .name(Text.translatable("yacl.%s.title".formatted(namespace)));
 
-        Map<String, Option.Builder<?>> unbuiltOptionsMap = new LinkedHashMap<>();
-        Map<String, Option<?>> builtOptionsMap = new LinkedHashMap<>();
-        var orderedOptionFields = getOrderedOptionFields(conclass);
-        for (Field optionField : orderedOptionFields) {
-            var data = OptionData.fromField(def, config, optionField);
-            var option = getOption(data);
-            unbuiltOptionsMap.put(data.id, option);
-        }
+            Map<String, Option.Builder<?>> unbuiltOptionsMap = new LinkedHashMap<>();
+            Map<String, Option<?>> builtOptionsMap = new LinkedHashMap<>();
+            var orderedOptionFields = getOrderedOptionFields(conclass);
+            for (Field optionField : orderedOptionFields) {
+                var data = OptionData.fromField(def, config, optionField);
+                var option = getOption(data);
+                unbuiltOptionsMap.put(data.id, option);
+            }
 
-        config.onBeforeBuildOptions(unbuiltOptionsMap);
-        for (Map.Entry<String, Option.Builder<?>> entry : unbuiltOptionsMap.entrySet()) {
-            builtOptionsMap.put(entry.getKey(), entry.getValue().build());
-        }
-        config.onAfterBuildOptions(builtOptionsMap);
-        for (Option<?> value : builtOptionsMap.values())
-            category.option(value);
+            config.onBeforeBuildOptions(unbuiltOptionsMap);
+            for (Map.Entry<String, Option.Builder<?>> entry : unbuiltOptionsMap.entrySet()) {
+                builtOptionsMap.put(entry.getKey(), entry.getValue().build());
+            }
+            config.onAfterBuildOptions(builtOptionsMap);
+            for (Option<?> value : builtOptionsMap.values())
+                category.option(value);
 
 
-        builder.title(Text.translatable("yacl.%s.title".formatted(namespace)));
-        builder.category(category.build());
-
-        return builder.build().generateScreen(parent);
+            builder.title(Text.translatable("yacl.%s.title".formatted(namespace)));
+            builder.category(category.build());
+            return builder;
+        }).generateScreen(parent);
     }
 
     /**
