@@ -27,5 +27,11 @@ public class VanillaOptions {
             new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {}
     );
 
+    public static void init() {
+        ALL_BOBBING_STRENGTH.setValue(ModConfig.INSTANCE.all_bobbing_strength());
+        HAND_BOBBING_STRENGTH.setValue(ModConfig.INSTANCE.hand_bobbing_strength());
+        CAMERA_BOBBING_STRENGTH.setValue(ModConfig.INSTANCE.camera_bobbing_strength());
+    }
+
 
 }

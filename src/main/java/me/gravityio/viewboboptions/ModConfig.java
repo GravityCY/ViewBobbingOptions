@@ -113,12 +113,6 @@ public class ModConfig implements ConfigScreenFrame {
 
     }
 
-    public void update() {
-        this.all_bobbing_strength(this.all_bobbing_strength);
-        this.hand_bobbing_strength(this.hand_bobbing_strength);
-        this.camera_bobbing_strength(this.camera_bobbing_strength);
-    }
-
     public void save() {
         GSON.save();
     }
