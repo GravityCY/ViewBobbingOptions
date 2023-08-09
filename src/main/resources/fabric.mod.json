@@ -29,6 +29,7 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
+    "fabric": ">=${fabric_version}",
     "minecraft": ">=1.19 <=1.19.1",
     "java": ">=17",
     "yet-another-config-lib": ">=${yacl_version}"

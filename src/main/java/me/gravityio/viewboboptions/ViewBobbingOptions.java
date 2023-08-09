@@ -1,7 +1,11 @@
 package me.gravityio.viewboboptions;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
+import dev.isxander.yacl.api.YetAnotherConfigLib;
+import dev.isxander.yacl.impl.YetAnotherConfigLibImpl;
+import dev.isxander.yacl.impl.utils.YACLConstants;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

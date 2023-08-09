@@ -9,21 +9,21 @@ public class VanillaOptions {
     public static final SimpleOption<Integer> ALL_BOBBING_STRENGTH = new SimpleOption<>(
             "options.vanilla.viewboboptions.all_bobbing_strength.label",
             SimpleOption.constantTooltip(Text.translatable("options.vanilla.viewboboptions.all_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
+            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%d%%".formatted(value))),
             new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {}
     );
 
     public static final SimpleOption<Integer> HAND_BOBBING_STRENGTH = new SimpleOption<>(
             "options.vanilla.viewboboptions.hand_bobbing_strength.label",
             SimpleOption.constantTooltip(Text.translatable("options.vanilla.viewboboptions.hand_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
+            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%d%%".formatted(value))),
             new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {}
     );
 
     public static final SimpleOption<Integer> CAMERA_BOBBING_STRENGTH = new SimpleOption<>(
             "options.vanilla.viewboboptions.camera_bobbing_strength.label",
             SimpleOption.constantTooltip(Text.translatable("options.vanilla.viewboboptions.camera_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
+            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%d%%".formatted(value))),
             new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {}
     );
 

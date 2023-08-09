@@ -39,6 +39,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modCompileOnly("dev.isxander:yet-another-config-lib:${project.yacl_version}") {
         exclude(group: "com.terraformersmc")
     }
@@ -61,6 +62,7 @@ processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
+    inputs.property "fabric_version", project.fabric_version
     inputs.property "yacl_version", project.yacl_version
     inputs.property "modmenu_version", project.modmenu_version
     filteringCharset "UTF-8"
@@ -69,6 +71,7 @@ processResources {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
+                "fabric_version": project.fabric_version,
                 "yacl_version": project.yacl_version,
                 "modmenu_version": project.modmenu_version
     }

@@ -5,13 +5,13 @@ import dev.isxander.yacl.config.ConfigEntry;
 import dev.isxander.yacl.config.GsonConfigInstance;
 import me.gravityio.viewboboptions.lib.yacl.ConfigScreenFrame;
 import me.gravityio.viewboboptions.lib.yacl.annotations.*;
+import net.fabricmc.loader.api.FabricLoader;
 
-import java.nio.file.Path;
 import java.util.Map;
 
 @Config(namespace = ViewBobbingOptions.MOD_ID)
 public class ModConfig implements ConfigScreenFrame {
-    public static GsonConfigInstance<ModConfig> GSON = new GsonConfigInstance<>(ModConfig.class, Path.of("config/viewboboptions.json"));
+    public static GsonConfigInstance<ModConfig> GSON = new GsonConfigInstance<>(ModConfig.class, FabricLoader.getInstance().getConfigDir().resolve("viewboboptions.json"));
 
     public static ModConfig INSTANCE;
 
