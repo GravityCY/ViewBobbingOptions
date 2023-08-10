@@ -14,7 +14,7 @@ import java.util.Map;
 @Config(namespace = "viewboboptions")
 public class ModConfig implements ConfigScreenFrame {
     public static ConfigInstance<ModConfig> GSON = GsonConfigInstance.createBuilder(ModConfig.class)
-            .setPath(Path.of("./config/viewboboptions.json"))
+            .setPath(Path.of("config/viewboboptions.json"))
             .build();
 
     @Override

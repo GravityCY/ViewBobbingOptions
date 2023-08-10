@@ -19,7 +19,7 @@ public class ViewBobbingOptions implements ClientModInitializer, PreLaunchEntryp
 
     @Override
     public void onInitializeClient() {
-
+        VanillaOptions.init();
     }
 
 
