@@ -10,6 +10,7 @@ group = project.maven_group
 modrinth {
     token = System.getenv("MODRINTH_UPLOAD")
     projectId = project.archives_base_name
+    versionName = "ViewBobbingOptions" + project.mod_version
     versionNumber = project.mod_version
     uploadFile = remapJar
     gameVersions = ["1.19", "1.19.1"]
