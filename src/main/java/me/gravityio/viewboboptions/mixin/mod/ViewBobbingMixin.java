@@ -1,13 +1,12 @@
 package me.gravityio.viewboboptions.mixin.mod;
 
-import me.gravityio.viewboboptions.mixin.BobType;
 import me.gravityio.viewboboptions.ModConfig;
 import me.gravityio.viewboboptions.mixin.TransientMixinData;
+import me.gravityio.viewboboptions.mixin.TransientMixinData.BobType;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
