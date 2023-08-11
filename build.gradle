@@ -1,10 +1,26 @@
 plugins {
     id 'fabric-loom' version '1.2-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 version = project.mod_version
 group = project.maven_group
+
+modrinth {
+    token = System.getenv("MODRINTH_UPLOAD")
+    projectId = project.archives_base_name
+    versionNumber = project.mod_version
+    uploadFile = remapJar
+    gameVersions = ["1.19.3"]
+    loaders = ["fabric"]
+    dependencies {
+        required.project "fabric-api"
+        required.project "yacl"
+        optional.project "modmenu"
+    }
+    syncBodyFrom = rootProject.file("README.md").text
+}
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
