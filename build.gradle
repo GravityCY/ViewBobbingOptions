@@ -40,9 +40,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Mod Menu
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
     // Cloth Config
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+    modCompileOnly "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
     // Sodium
     modCompileOnly "maven.modrinth:sodium:mc1.19.4-0.4.10"
     // Iris
