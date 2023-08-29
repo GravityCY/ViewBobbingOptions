@@ -3,7 +3,7 @@ package me.gravityio.viewboboptions.compat;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.gravityio.viewboboptions.ModConfig;
-import me.gravityio.viewboboptions.lib.yacl.ConfigScreenBuilder;
+import me.gravityio.yaclutils.ConfigScreenBuilder;
 
 public class ModMenuApiImpl implements ModMenuApi {
 

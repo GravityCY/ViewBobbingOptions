@@ -40,9 +40,6 @@ public class SodiumGeneralCategoryMixin {
         var storage = new OptionStorage<ModConfig>() {
             @Override
             public ModConfig getData() {
-                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.INSTANCE));
-                ViewBobbingOptions.LOGGER.info(String.valueOf(ModConfig.GSON.getConfig()));
-
                 return ModConfig.INSTANCE;
             }
 
@@ -57,13 +54,13 @@ public class SodiumGeneralCategoryMixin {
                     .setName(Text.translatable("options.sodium.viewboboptions.hand_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.sodium.viewboboptions.hand_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.hand_bobbing_strength(v), config -> ModConfig.INSTANCE.hand_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.hand_bobbing_strength(v), config -> ModConfig.INSTANCE.hand_bobbing_strength)
                     .build();
             var cameraOpt = OptionImpl.createBuilder(int.class, storage)
                     .setName(Text.translatable("options.sodium.viewboboptions.camera_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.sodium.viewboboptions.camera_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.camera_bobbing_strength(v), config -> ModConfig.INSTANCE.camera_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.camera_bobbing_strength(v), config -> ModConfig.INSTANCE.camera_bobbing_strength)
                     .build();
             original.add(handOpt).add(cameraOpt);
         } else {
@@ -71,7 +68,7 @@ public class SodiumGeneralCategoryMixin {
                     .setName(Text.translatable("options.sodium.viewboboptions.all_bobbing_strength.label"))
                     .setTooltip(Text.translatable("options.sodium.viewboboptions.all_bobbing_strength.description"))
                     .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
-                    .setBinding((config, v) -> ModConfig.INSTANCE.all_bobbing_strength(v), config -> ModConfig.INSTANCE.all_bobbing_strength())
+                    .setBinding((config, v) -> ModConfig.INSTANCE.all_bobbing_strength(v), config -> ModConfig.INSTANCE.all_bobbing_strength)
                     .build();
             original.add(allOpt);
         }

@@ -1,4 +1,10 @@
 {
+  "bind.category.viewboboptions": "View Bobbing Options",
+  "bind.category.viewboboptions.exclude": "Override Item",
+
+  "messages.viewboboptions.added_override": "§aAdded §7'%s' §fto overrides.",
+  "messages.viewboboptions.removed_override": "§cRemoved §7'%s' §ffrom overrides.",
+
   "yacl.viewboboptions.title": "Custom View Bobbing",
 
   "yacl.viewboboptions.show_in_options.label": "Show in Options",
@@ -18,6 +24,9 @@
   "yacl.viewboboptions.hand_bobbing_strength.description": "How much the hand model shakes when moving.",
   "yacl.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing Strength",
   "yacl.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving.",
+
+  "yacl.viewboboptions.item_overrides.label": "Item Bobbing Overrides",
+  "yacl.viewboboptions.item_overrides.description": "Items to disable hand bobbing when being held.",
 
   "options.sodium.viewboboptions.all_bobbing_strength.label": "View Bobbing Strength",
   "options.sodium.viewboboptions.all_bobbing_strength.description": "How much the hand model and the camera model shakes when moving.",
