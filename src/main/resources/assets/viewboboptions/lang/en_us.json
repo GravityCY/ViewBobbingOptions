@@ -1,4 +1,9 @@
 {
+  "viewboboptions.add_item_bind": "Add Item",
+
+  "messages.viewboboptions.add_item": "Added Item '%s'",
+  "messages.viewboboptions.remove_item": "Removed Item '%s'",
+
   "yacl.viewboboptions.title": "Custom View Bobbing",
 
   "yacl.viewboboptions.show_in_options.label": "Show in Options",
@@ -35,5 +40,7 @@
   "options.vanilla.viewboboptions.hand_bobbing_strength.description": "How much the hand model shakes when moving.",
 
   "options.vanilla.viewboboptions.camera_bobbing_strength.label": "Camera Bobbing",
-  "options.vanilla.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving."
+  "options.vanilla.viewboboptions.camera_bobbing_strength.description": "How much the screen shakes when moving.",
+
+  "category.gravityio.name": "Gravitational Keybinds"
 }

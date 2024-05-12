@@ -41,10 +41,10 @@ public class VideoOptionsScreenMixin extends GameOptionsScreen {
         if (!ModConfig.INSTANCE.show_in_options) return;
 
         if (ModConfig.INSTANCE.separate_bobs) {
-            ModConfig.INSTANCE.hand_bobbing_strength(VanillaOptions.HAND_BOBBING_STRENGTH.getValue());
-            ModConfig.INSTANCE.camera_bobbing_strength(VanillaOptions.CAMERA_BOBBING_STRENGTH.getValue());
+            ModConfig.INSTANCE.setHandBobbingStrength(VanillaOptions.HAND_BOBBING_STRENGTH.getValue().shortValue());
+            ModConfig.INSTANCE.setCameraBobbingStrength(VanillaOptions.CAMERA_BOBBING_STRENGTH.getValue().shortValue());
         } else {
-            ModConfig.INSTANCE.all_bobbing_strength(VanillaOptions.ALL_BOBBING_STRENGTH.getValue());
+            ModConfig.INSTANCE.setAllBobbingStrength(VanillaOptions.ALL_BOBBING_STRENGTH.getValue().shortValue());
         }
 
         ModConfig.GSON.save();
