@@ -17,18 +17,21 @@ tasks.register('publishMod') {
     dependsOn "modrinth"
 }
 
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    group = "publishing"
+def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item."
 
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
     disableVersionDetection()
 
+    group = "publishing"
     apiToken = System.getenv("CURSEFORGE_UPLOAD");
 
     def mainFile = upload(901484, remapJar)
+    mainFile.changelog = changelog
     mainFile.addGameVersion("1.20")
     mainFile.addJavaVersion("18")
     mainFile.displayName = "View Bobbing Options ${mod_version}"
     mainFile.addModLoader("Fabric")
+    mainFile.releaseType = "release"
     def fabricApi = 306612
     def modmenu= 308702
     def yacl =  667299
@@ -42,8 +45,9 @@ modrinth {
     versionName = "ViewBobbingOptions " + mod_version
     versionNumber = mod_version
     uploadFile = remapJar
-    gameVersions = ["1.20",]
+    gameVersions = ["1.20"]
     loaders = ["fabric"]
+    delegate.changelog = changelog
     dependencies {
         required.project "fabric-api"
         required.project "yacl"
