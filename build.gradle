@@ -27,14 +27,13 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
     def mainFile = upload(901484, remapJar)
     mainFile.changelog = changelog
-    mainFile.addGameVersion("1.20")
-    mainFile.addJavaVersion("18")
+    mainFile.addGameVersion("1.20.1")
     mainFile.displayName = "View Bobbing Options ${mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
-    def fabricApi = 306612
-    def modmenu= 308702
-    def yacl =  667299
+    def fabricApi = "fabric-api"
+    def modmenu= "modmenu"
+    def yacl =  "yacl"
     mainFile.addRequirement(fabricApi)
     mainFile.addOptional(modmenu, yacl)
 }
@@ -45,7 +44,7 @@ modrinth {
     versionName = "ViewBobbingOptions " + mod_version
     versionNumber = mod_version
     uploadFile = remapJar
-    gameVersions = ["1.20"]
+    gameVersions = ["1.20.1"]
     loaders = ["fabric"]
     delegate.changelog = changelog
     dependencies {
@@ -87,8 +86,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
     modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"
-    modCompileOnly "maven.modrinth:sodium:mc1.20-0.4.10" // 1.20 -> 1.20.6
-    modCompileOnly "maven.modrinth:iris:1.6.11+1.20.1" // 1.20, 1.20.1 -> 1.20.6
+    modCompileOnly "maven.modrinth:sodium:mc${sodium_version}" //
+    modCompileOnly "maven.modrinth:iris:${iris_version}"
 
     implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:0.1.1"
