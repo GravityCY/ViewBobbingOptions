@@ -17,7 +17,7 @@ tasks.register('publishMod') {
     dependsOn "modrinth"
 }
 
-def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item."
+def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
     disableVersionDetection()
