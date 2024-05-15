@@ -2,7 +2,7 @@ package me.gravityio.viewboboptions.mixin.compat;
 
 import me.gravityio.viewboboptions.mixin.TransientMixinData;
 import me.gravityio.viewboboptions.mixin.TransientMixinData.BobType;
-import net.irisshaders.iris.pathways.HandRenderer;
+import net.coderbot.iris.pipeline.HandRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
