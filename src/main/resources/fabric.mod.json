@@ -28,7 +28,7 @@
     "compat.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
+    "fabricloader": "*",
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
     "yet_another_config_lib_v3": "*",
