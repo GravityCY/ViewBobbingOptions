@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.util.Window;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,25 +30,11 @@ public class VideoOptionsScreenMixin extends GameOptionsScreen {
         if (!ModConfig.INSTANCE.show_in_options) return;
 
         if (ModConfig.INSTANCE.separate_bobs) {
-            this.list.addOptionEntry(VanillaOptions.HAND_BOBBING_STRENGTH, VanillaOptions.CAMERA_BOBBING_STRENGTH);
+            this.list.addAll(VanillaOptions.HAND_BOBBING_STRENGTH, VanillaOptions.CAMERA_BOBBING_STRENGTH);
         } else {
-            this.list.addOptionEntry(VanillaOptions.ALL_BOBBING_STRENGTH, null);
+            this.list.addSingleOptionEntry(VanillaOptions.ALL_BOBBING_STRENGTH);
         }
 
-    }
-
-    @Inject(method = "method_19865", at = @At("HEAD"))
-    private void onSave(Window window, ButtonWidget button, CallbackInfo ci) {
-        if (!ModConfig.INSTANCE.show_in_options) return;
-
-        if (ModConfig.INSTANCE.separate_bobs) {
-            ModConfig.INSTANCE.setHandBobbingStrength(VanillaOptions.HAND_BOBBING_STRENGTH.getValue().shortValue());
-            ModConfig.INSTANCE.setCameraBobbingStrength(VanillaOptions.CAMERA_BOBBING_STRENGTH.getValue().shortValue());
-        } else {
-            ModConfig.INSTANCE.setAllBobbingStrength(VanillaOptions.ALL_BOBBING_STRENGTH.getValue().shortValue());
-        }
-
-        ModConfig.GSON.save();
     }
 
 }
