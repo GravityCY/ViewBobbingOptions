@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class ViewBobbingOptions implements ClientModInitializer, PreLaunchEntrypoint {
     public static final String MOD_ID = "viewboboptions";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final KeyBinding ADD_ITEM_BIND = new KeyBinding("viewboboptions.add_item_bind", GLFW.GLFW_KEY_Z, "category.gravityio.name");
+    private static final KeyBinding ADD_ITEM_BIND = new KeyBinding("viewboboptions.add_item_bind", GLFW.GLFW_KEY_Z, "category.viewboboptions.name");
 
     public static boolean isStationary(ClientPlayerEntity player) {
         for (ItemStack handItem : player.getHandItems()) {
