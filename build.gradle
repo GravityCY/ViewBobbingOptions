@@ -5,54 +5,13 @@ plugins {
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
+    id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
 version = project.mod_version
 group = project.maven_group
 
-tasks.register('publishMod') {
-    group = "publishing"
-
-    dependsOn "publishCurseForge"
-    dependsOn "modrinth"
-}
-
 def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
-
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    disableVersionDetection()
-
-    group = "publishing"
-    apiToken = System.getenv("CURSEFORGE_UPLOAD");
-
-    def mainFile = upload(901484, remapJar)
-    mainFile.changelog = changelog
-    mainFile.addGameVersion("1.20.5", "1.20.6")
-    mainFile.displayName = "View Bobbing Options ${mod_version}"
-    mainFile.addModLoader("Fabric")
-    mainFile.releaseType = "release"
-    def fabricApi = "fabric-api"
-    def modmenu= "modmenu"
-    def yacl =  "yacl"
-    mainFile.addRequirement(fabricApi)
-    mainFile.addOptional(modmenu, yacl)
-}
-
-modrinth {
-    token = System.getenv("MODRINTH_UPLOAD")
-    projectId = archives_base_name
-    versionName = "ViewBobbingOptions " + mod_version
-    versionNumber = mod_version
-    uploadFile = remapJar
-    gameVersions = ["1.20.5", "1.20.6"]
-    loaders = ["fabric"]
-    delegate.changelog = changelog
-    dependencies {
-        required.project "fabric-api"
-        required.project "yacl"
-        optional.project "modmenu"
-    }
-}
 
 repositories {
     exclusiveContent {
@@ -92,6 +51,58 @@ dependencies {
     implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:0.1.1"
     include "com.github.LlamaLad7:MixinExtras:0.1.1"
+}
+
+replacement {
+    fileName = "README.md"
+    types = ["modrinth", "curseforge"]
+    values = [
+            "fabric_api_url": ["https://modrinth.com/mod/fabric-api", "https://curseforge.com/minecraft/mc-mods/fabric-api"],
+            "yacl_url": ["https://modrinth.com/mod/yacl", "https://curseforge.com/minecraft/mc-mods/yacl"],
+            "modmenu_url": ["https://modrinth.com/mod/modmenu", "https://curseforge.com/minecraft/mc-mods/modmenu"]
+    ]
+}
+
+tasks.register('publishMod') {
+    group = "publishing"
+
+    dependsOn "publishCurseForge"
+    dependsOn "modrinth"
+}
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    disableVersionDetection()
+
+    group = "publishing"
+    apiToken = System.getenv("CURSEFORGE_UPLOAD");
+
+    def mainFile = upload(901484, remapJar)
+    mainFile.changelog = changelog
+    mainFile.addGameVersion("1.20.5", "1.20.6")
+    mainFile.displayName = "View Bobbing Options ${mod_version}"
+    mainFile.addModLoader("Fabric")
+    mainFile.releaseType = "release"
+    def fabricApi = "fabric-api"
+    def modmenu= "modmenu"
+    def yacl =  "yacl"
+    mainFile.addRequirement(fabricApi)
+    mainFile.addOptional(modmenu, yacl)
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_UPLOAD")
+    projectId = archives_base_name
+    versionName = "ViewBobbingOptions " + mod_version
+    versionNumber = mod_version
+    uploadFile = remapJar
+    gameVersions = ["1.20.5", "1.20.6"]
+    loaders = ["fabric"]
+    delegate.changelog = changelog
+    dependencies {
+        required.project "fabric-api"
+        required.project "yacl"
+        optional.project "modmenu"
+    }
 }
 
 processResources {

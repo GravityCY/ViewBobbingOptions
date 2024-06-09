@@ -1,6 +1,15 @@
 # View Bobbing Options
 ### View Bobbing options as it should have been...
 
+___
+
+**Requires [FAPI](${fabric_api_url}) and [YACL](${yacl_url})**\
+**Recommends [Modmenu](${modmenu_url})**\
+**Need on Client: ✅  Need on Server: ❌**\
+**Report any Issues on [GitHub](https://github.com/GravityCY/ViewBobbingOptions/issues) or my [Discord Server](https://discord.gg/7AszMrEEjt)**
+
+___
+
 ![img_t.png](https://i.imgur.com/Xtlsr9M.png)
 ![img_1.png](https://i.imgur.com/9IHBZJf.png)
 ![img_2t.png](https://i.imgur.com/RwTroJs.png)
