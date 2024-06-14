@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class ModConfig {
     public static ConfigClassHandler<ModConfig> GSON = ConfigClassHandler.createBuilder(ModConfig.class)
-            .id(new Identifier(ViewBobbingOptions.MOD_ID, "config"))
+            .id(Identifier.of(ViewBobbingOptions.MOD_ID, "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(FabricLoader.getInstance().getConfigDir().resolve("viewboboptions.json5"))
                     .appendGsonBuilder(GsonBuilder::setPrettyPrinting)

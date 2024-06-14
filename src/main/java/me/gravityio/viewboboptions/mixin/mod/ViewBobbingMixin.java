@@ -7,6 +7,7 @@ import me.gravityio.viewboboptions.mixin.TransientMixinData.BobType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -54,11 +55,11 @@ public abstract class ViewBobbingMixin {
     }
 
     @Inject(method = "renderWorld", at = @At("HEAD"))
-    private void setCameraBobType(float tickDelta, long limitTime, CallbackInfo ci) {
+    private void setCameraBobType(RenderTickCounter tickCounter, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.CAMERA;
     }
     @Inject(method = "renderWorld", at = @At("TAIL"))
-    private void setFinishRenderWorld(float tickDelta, long limitTime, CallbackInfo ci) {
+    private void setFinishRenderWorld(RenderTickCounter tickCounter, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
 

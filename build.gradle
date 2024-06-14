@@ -11,7 +11,8 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
-def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
+def changelog = "+ Update to 1.21"
+def supportedVersions = ["1.21"]
 
 repositories {
     exclusiveContent {
@@ -39,12 +40,12 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
-
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
+    modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
+
     modCompileOnly "maven.modrinth:sodium:mc${sodium_version}" //
     modCompileOnly "maven.modrinth:iris:${iris_version}"
 
@@ -78,7 +79,9 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
     def mainFile = upload(901484, remapJar)
     mainFile.changelog = changelog
-    mainFile.addGameVersion("1.20.5", "1.20.6")
+    supportedVersions.each {
+        mainFile.addGameVersion(it)
+    }
     mainFile.displayName = "View Bobbing Options ${mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
@@ -95,7 +98,7 @@ modrinth {
     versionName = "ViewBobbingOptions " + mod_version
     versionNumber = mod_version
     uploadFile = remapJar
-    gameVersions = ["1.20.5", "1.20.6"]
+    gameVersions = supportedVersions
     loaders = ["fabric"]
     delegate.changelog = changelog
     dependencies {
