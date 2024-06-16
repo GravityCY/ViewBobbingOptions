@@ -28,7 +28,6 @@ repositories {
     }
     maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url = "https://maven.terraformersmc.com/" } // Mod Menu
-    maven { url = "https://maven.shedaniel.me/" } // Cloth Config
     maven {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
@@ -46,7 +45,7 @@ dependencies {
     modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
-    modCompileOnly "maven.modrinth:sodium:mc${sodium_version}" //
+    modCompileOnly "maven.modrinth:sodium:mc${sodium_version}"
     modCompileOnly "maven.modrinth:iris:${iris_version}"
 
     implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
@@ -121,7 +120,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly
@@ -145,21 +144,5 @@ java {
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
     }
 }
