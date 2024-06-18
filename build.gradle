@@ -84,6 +84,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.displayName = "View Bobbing Options ${mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
+    mainFile.addJavaVersion("Java 21")
     def fabricApi = "fabric-api"
     def modmenu= "modmenu"
     def yacl =  "yacl"

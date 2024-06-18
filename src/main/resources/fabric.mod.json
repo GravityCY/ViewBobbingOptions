@@ -9,6 +9,13 @@
     "sources": "https://github.com/GravityCY/ViewBobbingOptions",
     "issues": "https://github.com/GravityCY/ViewBobbingOptions"
   },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/Ef4Z22gnqj"
+      }
+    }
+  },
   "license": "MIT",
   "icon": "assets/viewboboptions/icon.png",
   "environment": "client",
