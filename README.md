@@ -10,13 +10,6 @@ ___
 
 ___
 
-![img_t.png](https://i.imgur.com/Xtlsr9M.png)
-![img_1.png](https://i.imgur.com/9IHBZJf.png)
-![img_2t.png](https://i.imgur.com/RwTroJs.png)
-![img.png](https://i.imgur.com/WmMJNat.png)
-
-___
-
 <a href="https://github.com/GravityCY/ViewBobbingOptions">
     <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
 </a>
@@ -30,6 +23,15 @@ ___
 </a>
 
 ___
+
+![img_t.png](https://i.imgur.com/Xtlsr9M.png)
+![img_1.png](https://i.imgur.com/9IHBZJf.png)
+![img_2t.png](https://i.imgur.com/RwTroJs.png)
+![img.png](https://i.imgur.com/WmMJNat.png)
+
+___
+
+
 
 # Toggle Bobbing for Items
 So you like hand bobbing, but you still want to be able to read 
