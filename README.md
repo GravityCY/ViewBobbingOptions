@@ -31,8 +31,6 @@ ___
 
 ___
 
-
-
 # Toggle Bobbing for Items
 So you like hand bobbing, but you still want to be able to read 
 a map while moving, well I added a keybind (default: `z`) to enable/disable bobbing for your currently held item.
