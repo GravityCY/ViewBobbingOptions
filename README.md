@@ -15,6 +15,22 @@ ___
 ![img_2t.png](https://i.imgur.com/RwTroJs.png)
 ![img.png](https://i.imgur.com/WmMJNat.png)
 
+___
+
+<a href="https://github.com/GravityCY/ViewBobbingOptions">
+    <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
+</a>
+
+<a href="https://discord.gg/7AszMrEEjt">
+    <img alt="discord-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg">
+</a>
+
+<a href="https://ko-fi.com/gravityio">
+    <img alt="kofi-singular-alt" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular-alt_vector.svg">
+</a>
+
+___
+
 # Toggle Bobbing for Items
 So you like hand bobbing, but you still want to be able to read 
 a map while moving, well I added a keybind (default: `z`) to enable/disable bobbing for your currently held item.
