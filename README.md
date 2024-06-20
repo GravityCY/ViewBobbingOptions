@@ -10,15 +10,15 @@ ___
 
 ___
 
-<a href="https://github.com/GravityCY/ViewBobbingOptions">
+<a href="https://github.com/GravityCY/ViewBobbingOptions" target="_blank">
     <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
 </a>
 
-<a href="https://discord.gg/7AszMrEEjt">
+<a href="https://discord.gg/7AszMrEEjt" target="_blank">
     <img alt="discord-singular" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg">
 </a>
 
-<a href="https://ko-fi.com/gravityio">
+<a href="https://ko-fi.com/gravityio" target="_blank">
     <img alt="kofi-singular-alt" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular-alt_vector.svg">
 </a>
 
