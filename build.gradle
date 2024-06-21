@@ -82,7 +82,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mcVersions.forEach {
         mainFile.addGameVersion(it)
     }
-    mainFile.addJavaVersion(javaVersionNum)
+    mainFile.addJavaVersion("Java ${javaVersionNum}")
     mainFile.displayName = "${project.mod_name} ${project.mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
