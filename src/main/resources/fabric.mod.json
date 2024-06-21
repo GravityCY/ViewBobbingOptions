@@ -1,21 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "viewboboptions",
-  "version": "${version}",
-  "name": "View Bobbing Options",
-  "description": "View Bobbing Options as it should have been.",
-  "authors": [ "GravityIO" ],
-  "contact": {
-    "sources": "https://github.com/GravityCY/ViewBobbingOptions",
-    "issues": "https://github.com/GravityCY/ViewBobbingOptions"
-  },
-  "license": "MIT",
-  "icon": "assets/viewboboptions/icon.png",
+
+  "id": "${mod_id}",
+  "name": "${mod_name}",
+  "version": "${mod_version}",
+  "description": "${mod_description}",
+  "authors": [ "${mod_author}" ],
+  "license": "${mod_license}",
   "environment": "client",
+  "contact": {
+    "homepage": "${mod_sources}",
+    "sources": "${mod_sources}",
+    "issues": "${mod_sources}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/CfAYy5KDHG"
+      }
+    }
+  },
+
+  "icon": "assets/${mod_id}/icon.png",
   "entrypoints": {
-    "preLaunch": [
-      "me.gravityio.viewboboptions.ViewBobbingOptions"
-    ],
     "client": [
       "me.gravityio.viewboboptions.ViewBobbingOptions"
     ],
@@ -29,7 +36,7 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
+    "fabric": ">=${fabric_version}",
     "minecraft": ">=${minecraft_version}",
     "yet_another_config_lib_v3": "*",
     "java": ">=17"
