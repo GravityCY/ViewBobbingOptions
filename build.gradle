@@ -8,8 +8,8 @@ plugins {
 
 def javaVersionNum = 17
 def javaVersion = JavaVersion.toVersion(javaVersionNum)
-def changelog = "- Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
-def mcVersions = [project.minecraft_version, "1.20.4"]
+def changelog = "- Fixed a compatibility issue."
+def mcVersions = [project.minecraft_version]
 
 version = project.mod_version
 group = "me.gravityio"
@@ -71,7 +71,8 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mcVersions.forEach {
         mainFile.addGameVersion(it)
     }
-    mainFile.displayName = "View Bobbing Options ${project.mod_version}"
+    mainFile.addJavaVersion("Java ${javaVersionNum}")
+    mainFile.displayName = "${project.mod_name} ${project.mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api")
