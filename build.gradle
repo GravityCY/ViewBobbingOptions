@@ -4,6 +4,7 @@ plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
+    id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
 def javaVersionNum = 17
@@ -45,7 +46,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
 
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}"
+    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
