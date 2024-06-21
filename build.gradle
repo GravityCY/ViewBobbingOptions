@@ -9,7 +9,7 @@ plugins {
 
 def javaVersionNum = 21
 def javaVersion = JavaVersion.toVersion(javaVersionNum)
-def changelog = "- Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
+def changelog = "- Fixed a compatibility issue."
 def mcVersions = [project.minecraft_version, "1.20.6"]
 
 version = project.mod_version
