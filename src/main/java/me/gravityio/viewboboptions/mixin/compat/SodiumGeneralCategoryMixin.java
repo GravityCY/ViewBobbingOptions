@@ -7,7 +7,6 @@ import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
 import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
 import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
 import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.storage.MinecraftOptionsStorage;
 import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.*;
@@ -17,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Slice;
 @Pseudo
 @Mixin(value = SodiumGameOptionPages.class, remap = false)
 public class SodiumGeneralCategoryMixin {
+
     @ModifyExpressionValue(method = "general",
             at = @At(
                     value = "INVOKE",
