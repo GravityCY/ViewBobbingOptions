@@ -75,11 +75,8 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.displayName = "${project.mod_name} ${project.mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
-    def fabricApi = 306612
-    def modmenu= 308702
-    def yacl =  667299
-    mainFile.addRequirement(fabricApi)
-    mainFile.addOptional(modmenu, yacl)
+    mainFile.addRequirement("fabric-api")
+    mainFile.addOptional("modmenu", "yacl")
 }
 
 modrinth {
