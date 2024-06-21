@@ -53,6 +53,16 @@ dependencies {
     modCompileOnly "maven.modrinth:iris:${iris_version}"
 }
 
+replacement {
+    fileName = "README.md"
+    types = ["modrinth", "curseforge"]
+    values = [
+            "fabric_api_url": ["https://modrinth.com/mod/fabric-api", "https://curseforge.com/minecraft/mc-mods/fabric-api"],
+            "yacl_url": ["https://modrinth.com/mod/yacl", "https://curseforge.com/minecraft/mc-mods/yacl"],
+            "modmenu_url": ["https://modrinth.com/mod/modmenu", "https://curseforge.com/minecraft/mc-mods/modmenu"]
+    ]
+}
+
 tasks.register('publishMod') {
     group = "publishing"
 
