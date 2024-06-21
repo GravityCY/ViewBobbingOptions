@@ -2,16 +2,22 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
-    id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
-version = project.mod_version
-group = project.maven_group
+def javaVersionNum = 17
+def javaVersion = JavaVersion.toVersion(javaVersionNum)
+def changelog = "- Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
+def mcVersions = [project.minecraft_version, "1.20.6"]
 
-def changelog = "+ Added a keybind ('z') to enable/disable bobbing when holding your current item.\n+ Your configs will be reset"
+version = project.mod_version
+group = "me.gravityio"
+
+base {
+    archivesName = project.mod_id
+}
 
 repositories {
     exclusiveContent {
@@ -32,7 +38,6 @@ repositories {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
     }
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -41,16 +46,12 @@ dependencies {
     mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
 
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
+    modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
 
-    modCompileOnly "com.terraformersmc:modmenu:${modmenu_version}"
     modCompileOnly "maven.modrinth:sodium:mc${sodium_version}" //
     modCompileOnly "maven.modrinth:iris:${iris_version}"
-
-    implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
-    annotationProcessor "com.github.LlamaLad7:MixinExtras:0.1.1"
-    include "com.github.LlamaLad7:MixinExtras:0.1.1"
 }
 
 replacement {
@@ -76,26 +77,25 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     group = "publishing"
     apiToken = System.getenv("CURSEFORGE_UPLOAD");
 
-    def mainFile = upload(901484, remapJar)
+    def mainFile = upload(project.curseforge_id, remapJar)
     mainFile.changelog = changelog
-    mainFile.addGameVersion("1.20.5", "1.20.6")
-    mainFile.displayName = "View Bobbing Options ${mod_version}"
+    mcVersions.forEach {
+        mainFile.addGameVersion(it)
+    }
+    mainFile.displayName = "View Bobbing Options ${project.mod_version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
-    def fabricApi = "fabric-api"
-    def modmenu= "modmenu"
-    def yacl =  "yacl"
-    mainFile.addRequirement(fabricApi)
-    mainFile.addOptional(modmenu, yacl)
+    mainFile.addRequirement("fabric-api")
+    mainFile.addOptional("modmenu", "yacl")
 }
 
 modrinth {
     token = System.getenv("MODRINTH_UPLOAD")
-    projectId = archives_base_name
-    versionName = "ViewBobbingOptions " + mod_version
+    projectId = project.modrinth_id
+    versionName = "${project.mod_name} ${project.mod_version}"
     versionNumber = mod_version
     uploadFile = remapJar
-    gameVersions = ["1.20.5", "1.20.6"]
+    gameVersions = mcVersions
     loaders = ["fabric"]
     delegate.changelog = changelog
     dependencies {
@@ -105,58 +105,41 @@ modrinth {
     }
 }
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
-    filteringCharset "UTF-8"
+processResources  {
+    def modProperties = [
+            "mod_id": project.mod_id,
+            "mod_name": project.mod_name,
+            "mod_version": project.mod_version,
+            "mod_description": project.mod_description,
+            "mod_author": project.mod_author,
+            "mod_sources": project.mod_sources,
+            "mod_license": project.mod_license,
+            "loader_version": project.loader_version,
+            "minecraft_version": project.minecraft_version,
+            "fabric_version": project.fabric_version
+    ]
+
+    inputs.properties(modProperties)
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+        expand modProperties
     }
 }
 
-def targetJavaVersion = 17
 tasks.withType(JavaCompile).configureEach {
-    // ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-    // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        it.options.release = targetJavaVersion
-    }
+    it.options.release = javaVersionNum
 }
 
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-    archivesBaseName = project.archives_base_name
     withSourcesJar()
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
     }
 }
