@@ -1,37 +1,37 @@
 package me.gravityio.viewboboptions;
 
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.SimpleOption;
-import net.minecraft.text.Text;
+import net.minecraft.client.OptionInstance;
+import net.minecraft.client.Options;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.network.chat.Component;
 
 public class VanillaOptions {
 
-    public static final SimpleOption<Integer> ALL_BOBBING_STRENGTH = new SimpleOption<>(
+    public static final OptionInstance<Integer> ALL_BOBBING_STRENGTH = new OptionInstance<>(
             "options.vanilla.viewboboptions.all_bobbing_strength.label",
-            value -> Tooltip.of(Text.translatable("options.vanilla.viewboboptions.all_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
-            new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {
+            value -> Tooltip.create(Component.translatable("options.vanilla.viewboboptions.all_bobbing_strength.description")),
+            (optionText, value) -> Options.genericValueLabel(optionText, Component.literal("%s%%".formatted(value))),
+            new OptionInstance.IntRange(0, 100), 100, value -> {
                 ModConfig.INSTANCE.all_bobbing_strength = value.shortValue();
                 ModConfig.GSON.save();
             }
     );
 
-    public static final SimpleOption<Integer> HAND_BOBBING_STRENGTH = new SimpleOption<>(
+    public static final OptionInstance<Integer> HAND_BOBBING_STRENGTH = new OptionInstance<>(
             "options.vanilla.viewboboptions.hand_bobbing_strength.label",
-            value -> Tooltip.of(Text.translatable("options.vanilla.viewboboptions.hand_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
-            new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {
+            value -> Tooltip.create(Component.translatable("options.vanilla.viewboboptions.hand_bobbing_strength.description")),
+            (optionText, value) -> Options.genericValueLabel(optionText, Component.literal("%s%%".formatted(value))),
+            new OptionInstance.IntRange(0, 100), 100, value -> {
                 ModConfig.INSTANCE.hand_bobbing_strength = value.shortValue();
                 ModConfig.GSON.save();
             }
     );
 
-    public static final SimpleOption<Integer> CAMERA_BOBBING_STRENGTH = new SimpleOption<>(
+    public static final OptionInstance<Integer> CAMERA_BOBBING_STRENGTH = new OptionInstance<>(
             "options.vanilla.viewboboptions.camera_bobbing_strength.label",
-            value -> Tooltip.of(Text.translatable("options.vanilla.viewboboptions.camera_bobbing_strength.description")),
-            (optionText, value) -> GameOptions.getGenericValueText(optionText, Text.literal("%s%%".formatted(value))),
-            new SimpleOption.ValidatingIntSliderCallbacks(0, 100), 100, value -> {
+            value -> Tooltip.create(Component.translatable("options.vanilla.viewboboptions.camera_bobbing_strength.description")),
+            (optionText, value) -> Options.genericValueLabel(optionText, Component.literal("%s%%".formatted(value))),
+            new OptionInstance.IntRange(0, 100), 100, value -> {
                 ModConfig.INSTANCE.camera_bobbing_strength = value.shortValue();
                 ModConfig.GSON.save();
             }
@@ -39,8 +39,8 @@ public class VanillaOptions {
 
 
     public static void init() {
-        ALL_BOBBING_STRENGTH.setValue((int) ModConfig.INSTANCE.all_bobbing_strength);
-        HAND_BOBBING_STRENGTH.setValue((int) ModConfig.INSTANCE.hand_bobbing_strength);
-        CAMERA_BOBBING_STRENGTH.setValue((int) ModConfig.INSTANCE.camera_bobbing_strength);
+        ALL_BOBBING_STRENGTH.set((int) ModConfig.INSTANCE.all_bobbing_strength);
+        HAND_BOBBING_STRENGTH.set((int) ModConfig.INSTANCE.hand_bobbing_strength);
+        CAMERA_BOBBING_STRENGTH.set((int) ModConfig.INSTANCE.camera_bobbing_strength);
     }
 }

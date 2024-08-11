@@ -7,16 +7,28 @@ plugins {
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
-def javaVersionNum = 21
-def javaVersion = JavaVersion.toVersion(javaVersionNum)
 def changelog = "- Fixed a compatibility issue."
-def mcVersions = [project.minecraft_version]
+def mcVersions = project.minecraft_supported_versions.split(",").toList()
 
-version = project.mod_version
+version = "$rootProject.mod_version+$project.name"
 group = "me.gravityio"
 
+if (stonecutter.current.isActive) {
+    rootProject.tasks.register("buildActive") {
+        group = "project"
+        dependsOn(tasks.named("build"))
+    }
+}
+
 base {
-    archivesName = project.mod_id
+    archivesName = rootProject.mod_id
+}
+
+loom {
+    runConfigs.all {
+        ideConfigGenerated(true) // Run configurations are not created for subprojects by default
+        runDir = "../../run" // Use a shared run folder and just create separate worlds
+    }
 }
 
 repositories {
@@ -41,15 +53,20 @@ repositories {
 
 dependencies {
     // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "dev.isxander:yet-another-config-lib:${yacl_version}-fabric"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
+    minecraft "com.mojang:minecraft:${project.name}"
+    mappings loom.officialMojangMappings()
 
-    modCompileOnly "maven.modrinth:sodium:mc${sodium_version}" //
-    modCompileOnly "maven.modrinth:iris:${iris_version}"
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    if (project.name == "1.20.3") {
+        modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+    } else {
+        modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
+    }
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
+    modCompileOnly "maven.modrinth:iris:${project.iris_version}"
 }
 
 replacement {
@@ -75,13 +92,13 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     group = "publishing"
     apiToken = System.getenv("CURSEFORGE_UPLOAD");
 
-    def mainFile = upload(project.curseforge_id, remapJar)
+    def mainFile = upload(rootProject.curseforge_id, remapJar)
     mainFile.changelog = changelog
     mcVersions.forEach {
         mainFile.addGameVersion(it)
     }
-    mainFile.addJavaVersion("Java ${javaVersionNum}")
-    mainFile.displayName = "${project.mod_name} ${project.mod_version}"
+    mainFile.addJavaVersion("Java ${project.java_version}")
+    mainFile.displayName = "${rootProject.mod_name} ${project.version}"
     mainFile.addModLoader("Fabric")
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api")
@@ -90,9 +107,9 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
 modrinth {
     token = System.getenv("MODRINTH_UPLOAD")
-    projectId = project.modrinth_id
-    versionName = "${project.mod_name} ${project.mod_version}"
-    versionNumber = mod_version
+    projectId = rootProject.modrinth_id
+    versionName = "${rootProject.mod_name} ${project.version}"
+    versionNumber = project.version
     uploadFile = remapJar
     gameVersions = mcVersions
     loaders = ["fabric"]
@@ -106,16 +123,18 @@ modrinth {
 
 processResources  {
     def modProperties = [
-            "mod_id": project.mod_id,
-            "mod_name": project.mod_name,
-            "mod_version": project.mod_version,
-            "mod_description": project.mod_description,
-            "mod_author": project.mod_author,
-            "mod_sources": project.mod_sources,
-            "mod_license": project.mod_license,
-            "loader_version": project.loader_version,
-            "minecraft_version": project.minecraft_version,
-            "fabric_version": project.fabric_version
+            "mod_id": rootProject.mod_id,
+            "mod_name": rootProject.mod_name,
+            "mod_version": rootProject.mod_version,
+            "mod_description": rootProject.mod_description,
+            "mod_author": rootProject.mod_author,
+            "mod_sources": rootProject.mod_sources,
+            "mod_license": rootProject.mod_license,
+            "loader_version": rootProject.loader_version,
+            "minecraft_version_range": project.minecraft_version_range,
+            "fabric_version": project.fabric_version,
+            "yacl_version": project.yacl_version,
+            "java_version": project.java_version
     ]
 
     inputs.properties(modProperties)
@@ -127,14 +146,14 @@ processResources  {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = javaVersionNum
+    it.options.release = 21
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
