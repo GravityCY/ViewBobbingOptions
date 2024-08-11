@@ -1,5 +1,6 @@
 package me.gravityio.viewboboptions.mixin.mod;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import me.gravityio.viewboboptions.ModConfig;
 import me.gravityio.viewboboptions.ViewBobbingOptions;
 import me.gravityio.viewboboptions.mixin.TransientMixinData;
@@ -7,7 +8,6 @@ import me.gravityio.viewboboptions.mixin.TransientMixinData.BobType;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,7 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=1.21 {
 import net.minecraft.client.DeltaTracker;
-//?}
+//?} elif >=1.20.5 {
+/*import org.joml.Matrix4f;
+*///?}
 
 @Mixin(GameRenderer.class)
 public abstract class ViewBobbingMixin {
@@ -45,6 +47,7 @@ public abstract class ViewBobbingMixin {
         };
     }
 
+    //? if >=1.20.5 {
     @Inject(method = "renderItemInHand",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetProjectionMatrix(Lorg/joml/Matrix4f;)V"))
     private void setHandBobType(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
@@ -54,6 +57,17 @@ public abstract class ViewBobbingMixin {
     private void setFinishRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
+    //?} else {
+    /*@Inject(method = "renderItemInHand",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetProjectionMatrix(Lorg/joml/Matrix4f;)V"))
+    private void setHandBobType(PoseStack poseStack, Camera camera, float f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.HAND;
+    }
+    @Inject(method = "renderItemInHand", at = @At("TAIL"))
+    private void setFinishRenderHand(PoseStack poseStack, Camera camera, float f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.NONE;
+    }
+    *///?}
 
     //? if >=1.21 {
     @Inject(method = "renderLevel", at = @At("HEAD"))
@@ -64,13 +78,22 @@ public abstract class ViewBobbingMixin {
     private void setFinishRenderWorld(DeltaTracker tickCounter, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
-    //?} else {
+    //?} elif >=1.20.5 {
     /*@Inject(method = "renderLevel", at = @At("HEAD"))
     private void setCameraBobType(float f, long l, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.CAMERA;
     }
     @Inject(method = "renderLevel", at = @At("TAIL"))
     private void setFinishRenderWorld(float f, long l, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.NONE;
+    }
+    *///?} else {
+    /*@Inject(method = "renderLevel", at = @At("HEAD"))
+    private void setCameraBobType(float f, long l, PoseStack poseStack, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.CAMERA;
+    }
+    @Inject(method = "renderLevel", at = @At("TAIL"))
+    private void setFinishRenderWorld(float f, long l, PoseStack poseStack, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
     *///?}
