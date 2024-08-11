@@ -1,6 +1,5 @@
 package me.gravityio.viewboboptions.mixin.mod;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import me.gravityio.viewboboptions.ModConfig;
 import me.gravityio.viewboboptions.ViewBobbingOptions;
 import me.gravityio.viewboboptions.mixin.TransientMixinData;
@@ -18,8 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=1.21 {
 import net.minecraft.client.DeltaTracker;
-//?} elif >=1.20.5 {
-/*import org.joml.Matrix4f;
+import org.joml.Matrix4f;
+//?} elif =1.20.3 {
+/*import com.mojang.blaze3d.vertex.PoseStack;
 *///?}
 
 @Mixin(GameRenderer.class)
