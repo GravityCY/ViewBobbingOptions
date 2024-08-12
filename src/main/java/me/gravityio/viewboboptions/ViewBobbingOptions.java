@@ -20,10 +20,10 @@ public class ViewBobbingOptions implements ClientModInitializer {
 
     public static ResourceLocation id(String path) {
         //? if >=1.21 {
-        /*return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
-        *///?} else {
-        return new ResourceLocation(MOD_ID, path);
-        //?}
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        //?} else {
+        /*return new ResourceLocation(MOD_ID, path);
+        *///?}
     }
 
     public static boolean isStationary(LocalPlayer player) {
