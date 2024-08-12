@@ -1,4 +1,10 @@
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
+import groovy.json.JsonSlurper
+
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+
 
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
@@ -57,11 +63,13 @@ dependencies {
     mappings loom.officialMojangMappings()
 
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-    if (project.name == "1.20.3") {
+
+    if (project.name == "1.20.3" || project.name == "1.20") {
         modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
     } else {
         modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
     }
+
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
@@ -77,6 +85,29 @@ replacement {
             "yacl_url": ["https://modrinth.com/mod/yacl", "https://curseforge.com/minecraft/mc-mods/yacl"],
             "modmenu_url": ["https://modrinth.com/mod/modmenu", "https://curseforge.com/minecraft/mc-mods/modmenu"]
     ]
+}
+
+tasks.register("depVersions") {
+    doLast {
+        def projects = ["fabric-api", "modmenu", "yacl", "sodium", "iris"]
+        def client = HttpClient.newBuilder().build()
+        for (aproject in projects) {
+            def encLoaders = URLEncoder.encode("[\"fabric\"]", "UTF-8")
+            def encVersions = URLEncoder.encode("[\"${project.name}\"]", "UTF-8")
+
+            def query = "${aproject}/version?loaders=${encLoaders}&game_versions=${encVersions}"
+            def uri = URI.create("https://api.modrinth.com/v2/project/${query}")
+            def req = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header("User-Agent", "GravityCY/gradle_test_project/0.0.0")
+                    .GET()
+                    .build()
+
+            def res = client.send(req, HttpResponse.BodyHandlers.ofString())
+            def json = new JsonSlurper().parseText(res.body()) as List<Map<String, String>>
+            println "Most recent version of ${aproject}: ${json[0].version_number}"
+        }
+    }
 }
 
 tasks.register('publishMod') {
