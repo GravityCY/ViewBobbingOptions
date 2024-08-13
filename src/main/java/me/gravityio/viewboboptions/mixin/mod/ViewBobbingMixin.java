@@ -15,9 +15,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//? if >=1.20.5 {
+import org.joml.Matrix4f;
+//?}
+
 //? if >=1.21 {
 import net.minecraft.client.DeltaTracker;
-import org.joml.Matrix4f;
 //?} elif <=1.20.3 {
 /*import com.mojang.blaze3d.vertex.PoseStack;
 *///?}

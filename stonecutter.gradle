@@ -1,3 +1,7 @@
+//plugins {
+//    id "me.gravityio.discord-webhook" version "0.0.2"
+//}
+
 plugins.apply "dev.kikugie.stonecutter"
 stonecutter.active "1.21" /* [SC] DO NOT EDIT */
 
@@ -5,3 +9,48 @@ stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chisele
     setGroup "project"
     ofTask "build"
 }
+
+stonecutter.registerChiseled tasks.register("chiseledPublish", stonecutter.chiseled) {
+    setGroup "project"
+    ofTask "publishMod"
+}
+
+//discordWebhook {
+//    webhook_url = secrets.get("discord_webhook_url") as String
+//}
+//
+//tasks.register("test-task") {
+//    finalizedBy "sendDiscordWebhook"
+//    doLast {
+//        def names = subprojects.collect { it.name }
+//
+//        def titles = new ArrayList<>(names.size())
+//        def links = new ArrayList<>(names.size())
+//        def githubURL = "[GitHub](<https://github.com/GravityCY/ViewBobbingOptions/issues>)"
+//        names.forEach {name ->
+//            def ver = "${rootProject.mod_version}+${name}"
+//            def mdURL = "https://modrinth.com/mod/viewboboptions/version/${ver}"
+//            def cfURL = "https://www.curseforge.com/minecraft/mc-mods/viewboboptions/files/0"
+//
+//            titles.add("# ${rootProject.mod_name} ${ver} Update")
+//            links.add("**${ver}** [Modrinth ${ver}](<${mdURL}>) | [Curseforge ${ver}](<${cfURL}>)")
+//        }
+//
+//        def discMessage = ""
+//        titles.forEach {
+//            discMessage += it + "\n"
+//        }
+//
+//        discMessage += changelog + "\n\n"
+//
+//        links.forEach {
+//            discMessage += it + "\n"
+//        }
+//        discMessage += githubURL
+//        println(discMessage)
+//
+//        tasks.named("sendDiscordWebhook").configure {
+//            it.content = discMessage
+//        }
+//    }
+//}

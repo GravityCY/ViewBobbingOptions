@@ -5,7 +5,6 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
@@ -13,7 +12,11 @@ plugins {
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
-def changelog = "- Fixed a compatibility issue."
+def secrets = new Properties()
+rootProject.file("secrets.properties").withInputStream { secrets.load(it) }
+rootProject.ext.sharedData = [:]
+def javaVersionNum = project.java_version.toInteger()
+def javaVersionObj = JavaVersion.toVersion(javaVersionNum)
 def mcVersions = project.minecraft_supported_versions.split(",").toList()
 
 version = "$rootProject.mod_version+$project.name"
@@ -65,16 +68,24 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
 
     if (project.name == "1.20.3" || project.name == "1.20") {
-        modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+        modCompileOnly "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_api}"
+        modLocalRuntime "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_mod}"
+    } else if (project.name == "1.20.1") {
+        modCompileOnly "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_api}"
+        modLocalRuntime "dev.isxander:yet-another-config-lib:${project.yacl_version_mod}-fabric"
     } else {
-        modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
+        modCompileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version_api}-fabric"
+        modLocalRuntime "dev.isxander:yet-another-config-lib:${project.yacl_version_mod}-fabric"
     }
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modCompileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_api}"
+    modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version_api}"
 
-    modCompileOnly "maven.modrinth:sodium:${project.sodium_version}"
-    modCompileOnly "maven.modrinth:iris:${project.iris_version}"
+    modCompileOnly "maven.modrinth:sodium:${project.sodium_version_api}"
+    modCompileOnly "maven.modrinth:iris:${project.iris_version_api}"
+
+    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_mod}"
+    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version_mod}"
 }
 
 replacement {
@@ -124,7 +135,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = System.getenv("CURSEFORGE_UPLOAD");
 
     def mainFile = upload(rootProject.curseforge_id, remapJar)
-    mainFile.changelog = changelog
+    mainFile.changelog = rootProject.changelog
     mcVersions.forEach {
         mainFile.addGameVersion(it)
     }
@@ -144,7 +155,7 @@ modrinth {
     uploadFile = remapJar
     gameVersions = mcVersions
     loaders = ["fabric"]
-    delegate.changelog = changelog
+    delegate.changelog = rootProject.changelog
     dependencies {
         required.project "fabric-api"
         required.project "yacl"
@@ -156,15 +167,15 @@ processResources  {
     def modProperties = [
             "mod_id": rootProject.mod_id,
             "mod_name": rootProject.mod_name,
-            "mod_version": rootProject.mod_version,
+            "mod_version": project.version,
             "mod_description": rootProject.mod_description,
             "mod_author": rootProject.mod_author,
             "mod_sources": rootProject.mod_sources,
             "mod_license": rootProject.mod_license,
             "loader_version": rootProject.loader_version,
             "minecraft_version_range": project.minecraft_version_range,
-            "fabric_version": project.fabric_version,
-            "yacl_version": project.yacl_version,
+            "fabric_version": project.fabric_version_api,
+            "yacl_version": project.yacl_version_api,
             "java_version": project.java_version
     ]
 
@@ -177,14 +188,14 @@ processResources  {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    it.options.release = 21
+    it.options.release = javaVersionNum
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = javaVersionObj
+    targetCompatibility = javaVersionObj
 }
 
 jar {
