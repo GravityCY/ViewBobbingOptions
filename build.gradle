@@ -12,9 +12,7 @@ plugins {
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
 }
 
-def secrets = new Properties()
-rootProject.file("secrets.properties").withInputStream { secrets.load(it) }
-rootProject.ext.sharedData = [:]
+def changelog = "- Developing for old Minecraft versions should be easier now, the codebase is now based on stonecutter!"
 def javaVersionNum = project.java_version.toInteger()
 def javaVersionObj = JavaVersion.toVersion(javaVersionNum)
 def mcVersions = project.minecraft_supported_versions.split(",").toList()
@@ -135,7 +133,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = System.getenv("CURSEFORGE_UPLOAD");
 
     def mainFile = upload(rootProject.curseforge_id, remapJar)
-    mainFile.changelog = rootProject.changelog
+    mainFile.changelog = changelog
     mcVersions.forEach {
         mainFile.addGameVersion(it)
     }
@@ -155,7 +153,7 @@ modrinth {
     uploadFile = remapJar
     gameVersions = mcVersions
     loaders = ["fabric"]
-    delegate.changelog = rootProject.changelog
+    delegate.changelog = changelog
     dependencies {
         required.project "fabric-api"
         required.project "yacl"
