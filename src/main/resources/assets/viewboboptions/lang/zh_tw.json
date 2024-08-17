@@ -1,0 +1,46 @@
+{
+  "category.viewboboptions.name": "走路晃動選項",
+
+  "viewboboptions.add_item_bind": "新增項目",
+
+  "messages.viewboboptions.add_item": "已新增項目「%s」",
+  "messages.viewboboptions.remove_item": "已移除項目「%s」",
+
+  "yacl.viewboboptions.title": "自訂走路晃動",
+
+  "yacl.viewboboptions.show_in_options.label": "顯示在選項中",
+  "yacl.viewboboptions.show_in_options.description": "是否也在原版影片設定選單中顯示滑桿。",
+  "yacl.viewboboptions.show_in_options.on": "顯示",
+  "yacl.viewboboptions.show_in_options.off": "隱藏",
+  
+  "yacl.viewboboptions.separate_bobs.label": "分離晃動",
+  "yacl.viewboboptions.separate_bobs.description": "將手部晃動和鏡頭晃動分開。",
+  "yacl.viewboboptions.separate_bobs.on": "是",
+  "yacl.viewboboptions.separate_bobs.off": "否",
+
+  "yacl.viewboboptions.all_bobbing_strength.label": "走路晃動強度",
+  "yacl.viewboboptions.all_bobbing_strength.description": "移動時手部模型和鏡頭模型的晃動程度。",
+
+  "yacl.viewboboptions.hand_bobbing_strength.label": "手部晃動強度",
+  "yacl.viewboboptions.hand_bobbing_strength.description": "移動時手部模型的晃動程度。",
+  "yacl.viewboboptions.camera_bobbing_strength.label": "鏡頭晃動強度",
+  "yacl.viewboboptions.camera_bobbing_strength.description": "移動時畫面的晃動程度。",
+
+  "options.sodium.viewboboptions.all_bobbing_strength.label": "走路晃動強度",
+  "options.sodium.viewboboptions.all_bobbing_strength.description": "移動時手部模型和鏡頭模型的晃動程度。",
+
+  "options.sodium.viewboboptions.hand_bobbing_strength.label": "手部晃動強度",
+  "options.sodium.viewboboptions.hand_bobbing_strength.description": "移動時手部模型的晃動程度。",
+
+  "options.sodium.viewboboptions.camera_bobbing_strength.label": "鏡頭晃動強度",
+  "options.sodium.viewboboptions.camera_bobbing_strength.description": "移動時畫面的晃動程度。",
+
+  "options.vanilla.viewboboptions.all_bobbing_strength.label": "走路晃動",
+  "options.vanilla.viewboboptions.all_bobbing_strength.description": "移動時手部模型和鏡頭模型的晃動程度。",
+
+  "options.vanilla.viewboboptions.hand_bobbing_strength.label": "手部晃動",
+  "options.vanilla.viewboboptions.hand_bobbing_strength.description": "移動時手部模型的晃動程度。",
+
+  "options.vanilla.viewboboptions.camera_bobbing_strength.label": "鏡頭晃動",
+  "options.vanilla.viewboboptions.camera_bobbing_strength.description": "移動時畫面的晃動程度。"
+}
