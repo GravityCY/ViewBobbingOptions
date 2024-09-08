@@ -1,1 +1,1 @@
-- Developing for old Minecraft versions should be easier now, the codebase is now based on stonecutter!
+- Updated to the most recent sodium
