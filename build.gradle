@@ -6,7 +6,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
@@ -31,6 +31,13 @@ base {
     archivesName = rootProject.mod_id
 }
 
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
 loom {
     runConfigs.all {
         ideConfigGenerated(true) // Run configurations are not created for subprojects by default
@@ -39,6 +46,7 @@ loom {
 }
 
 repositories {
+    mavenCentral()
     exclusiveContent {
         forRepository {
             maven {
@@ -50,11 +58,22 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
-    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url = "https://maven.terraformersmc.com/" } // Mod Menu
     maven {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
+    }
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force "com.twelvemonkeys.common:common-io:3.10.0"
+        force "com.twelvemonkeys.common:common-lang:3.10.0"
+        force "com.twelvemonkeys.common:common-image:3.10.0"
+
+        force "com.twelvemonkeys.imageio:imageio-metadata:3.10.0"
+        force "com.twelvemonkeys.imageio:imageio-webp:3.10.0"
+        force "com.twelvemonkeys.imageio:imageio-core:3.10.0"
     }
 }
 
@@ -66,24 +85,22 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
 
     if (project.name == "1.20.3" || project.name == "1.20") {
-        modCompileOnly "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_api}"
-        modLocalRuntime "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_mod}"
-    } else if (project.name == "1.20.1") {
-        modCompileOnly "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_api}"
-        modLocalRuntime "dev.isxander:yet-another-config-lib:${project.yacl_version_mod}-fabric"
+        modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version_api}", {
+            exclude group: "net.fabricmc.fabric-api"
+        }
     } else {
-        modCompileOnly "dev.isxander:yet-another-config-lib:${project.yacl_version_api}-fabric"
-        modLocalRuntime "dev.isxander:yet-another-config-lib:${project.yacl_version_mod}-fabric"
+        modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version_api}-fabric", {
+            exclude group: "net.fabricmc.fabric-api"
+        }
     }
 
     modCompileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_api}"
     modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version_api}"
-
     modCompileOnly "maven.modrinth:sodium:${project.sodium_version_api}"
     modCompileOnly "maven.modrinth:iris:${project.iris_version_api}"
 
-    modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_mod}"
-    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version_mod}"
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_mod}"
+    modRuntimeOnly "com.terraformersmc:modmenu:${project.modmenu_version_mod}"
 }
 
 replacement {
@@ -143,6 +160,9 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api")
     mainFile.addOptional("modmenu", "yacl")
+    doLast {
+        rootProject.ext.data.get(stonecutter.current.project).curseFileId = mainFile.curseFileId
+    }
 }
 
 modrinth {
@@ -158,6 +178,12 @@ modrinth {
         required.project "fabric-api"
         required.project "yacl"
         optional.project "modmenu"
+    }
+}
+
+tasks.named("modrinth").configure {
+    doLast {
+        rootProject.ext.data.get(stonecutter.current.project).modrinthFileId = it.uploadInfo.id
     }
 }
 

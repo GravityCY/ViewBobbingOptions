@@ -2,12 +2,12 @@ package me.gravityio.viewboboptions.mixin.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.gravityio.viewboboptions.ModConfig;
-import me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages;
-import me.jellysquid.mods.sodium.client.gui.options.OptionGroup;
-import me.jellysquid.mods.sodium.client.gui.options.OptionImpl;
-import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
-import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
+import net.caffeinemc.mods.sodium.client.gui.SodiumGameOptionPages;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionGroup;
+import net.caffeinemc.mods.sodium.client.gui.options.OptionImpl;
+import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
+import net.caffeinemc.mods.sodium.client.gui.options.storage.OptionStorage;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,13 +20,13 @@ public class SodiumGeneralCategoryMixin {
     @ModifyExpressionValue(method = "general",
             at = @At(
                     value = "INVOKE",
-                    target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;add(Lme/jellysquid/mods/sodium/client/gui/options/Option;)Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;",
+                    target = "Lnet/caffeinemc/mods/sodium/client/gui/options/OptionGroup$Builder;add(Lnet/caffeinemc/mods/sodium/client/gui/options/Option;)Lnet/caffeinemc/mods/sodium/client/gui/options/OptionGroup$Builder;",
                     ordinal = 0
             ),
             slice = @Slice(
                     from = @At(
                             value = "INVOKE",
-                            target = "Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup;createBuilder()Lme/jellysquid/mods/sodium/client/gui/options/OptionGroup$Builder;",
+                            target = "Lnet/caffeinemc/mods/sodium/client/gui/options/OptionImpl;createBuilder(Ljava/lang/Class;Lnet/caffeinemc/mods/sodium/client/gui/options/storage/OptionStorage;)Lnet/caffeinemc/mods/sodium/client/gui/options/OptionImpl$Builder;",
                             ordinal = 2
                     )
             )
