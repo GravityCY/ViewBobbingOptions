@@ -5,13 +5,16 @@ plugins {
 plugins.apply "dev.kikugie.stonecutter"
 stonecutter.active "1.21" /* [SC] DO NOT EDIT */
 
-def secrets = new Properties()
+Properties secrets = new Properties()
 rootProject.file("secrets.properties").withInputStream { secrets.load(it) }
+List<String> allVersions = new ArrayList<>()
+String webhookUrl = secrets.get("discord_webhook").toString()
 
 rootProject.ext.data = new LinkedHashMap<String, UploadData>()
 rootProject.ext.changelog = file("CHANGELOG.md").text
 
 stonecutter.versions.forEach {
+    allVersions.add(it.project)
     rootProject.ext.data.put(it.project, new UploadData())
 }
 
@@ -22,43 +25,73 @@ stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chisele
 
 stonecutter.registerChiseled tasks.register("chiseledPublish") {
     group = "project"
-    dependsOn "chiseledStonecutter"
-    chiseledDepends(it, "publishMod")
+    chiseledDepends(it, "publishMod", allVersions)
 
     doLast {
-        def webhookUrl = secrets.get("discord_webhook").toString()
-
-        def message = ""
-
-        def mdSlug = "viewboboptions"
-        def cfSlug = "viewboboptions"
-
-        def discordChannel = "https://discord.com/channels/1112046604183162961/1246456621404524605"
-        def mentionId = "1277913110195208192"
-
-        rootProject.ext.data.each {
-            UploadData upData = it.value
-            message += "# $rootProject.mod_name ${rootProject.mod_version}+${it.key} Update ([Modrinth](<https://modrinth.com/mod/${mdSlug}/version/${upData.modrinthFileId}>) | [Curseforge](<https://curseforge.com/minecraft/mc-mods/${cfSlug}/files/${upData.curseFileId}>))\n"
-        }
-        message += "$rootProject.ext.changelog\n\n"
-
-//        message += "**To view the details of the changelog visit the [Modrinth changelog page](<https://modrinth.com/mod/${mdSlug}/changelog>) or the [CurseForge files page](<https://curseforge.com/minecraft/mc-mods/${cfSlug}/files/${rootProject.ext.data.firstEntry().value.curseFileId}>)**\n"
-        message += "**As always report any issues on my [GitHub](<${rootProject.mod_sources}>) or in ${discordChannel}**\n"
-        message += "<@&${mentionId}>"
-
-        rootProject.file("temp").mkdir()
-        rootProject.file("temp/discord.md").write(message)
-
-        def config = discord_webhook.prepare(webhookUrl)
-        config.content(message)
-        discord_webhook.send()
+        onPublish(webhookUrl, allVersions)
     }
 }
 
-def chiseledDepends(Task task, String subtaskName) {
-    def setupTask = tasks.named("chiseledStonecutter")
-    stonecutter.versions.forEach {
-        def proj = rootProject.project(it.project)
+tasks.register("activeBuild") {
+    group = "project"
+    activeDepend(it, "build")
+}
+
+tasks.register("activePublish") {
+    group = "project"
+    activeDepend(it, "publishMod")
+
+    doLast {
+        onPublish(webhookUrl, stonecutter.current.project)
+    }
+}
+
+def onPublish(String webhookUrl, List<String> toPublishList) {
+    onPublish(webhookUrl, toPublishList.toArray(String[]::new))
+}
+
+def onPublish(String webhookUrl, String... toPublishArray) {
+    def message = ""
+
+    def mdSlug = "viewboboptions"
+    def cfSlug = "viewboboptions"
+
+    def issueChannel = "https://discord.com/channels/1112046604183162961/1245460372270612612"
+    def mentionId = "1277913050959319050"
+
+    toPublishArray.each {
+        UploadData upData = rootProject.ext.data.get(it)
+        message += "# $rootProject.mod_name ${rootProject.mod_version}+${it} Update ([Modrinth](<https://modrinth.com/mod/${mdSlug}/version/${upData.modrinthFileId}>) | [Curseforge](<https://curseforge.com/minecraft/mc-mods/${cfSlug}/files/${upData.curseFileId}>))\n"
+    }
+
+    message += "$rootProject.ext.changelog\n\n"
+
+//        message += "**To view the details of the changelog visit the [Modrinth changelog page](<https://modrinth.com/mod/${mdSlug}/changelog>) or the [CurseForge files page](<https://curseforge.com/minecraft/mc-mods/${cfSlug}/files/${rootProject.ext.data.firstEntry().value.curseFileId}>)**\n"
+    message += "**As always report any issues on my [GitHub](<${rootProject.mod_sources}>) or in ${issueChannel}**\n"
+    message += "<@&${mentionId}>"
+
+    rootProject.file("temp").mkdir()
+    rootProject.file("temp/discord.md").write(message)
+
+    def config = discord_webhook.prepare(webhookUrl)
+    config.content(message)
+    discord_webhook.send()
+}
+
+def activeDepend(Task task, String subtaskName) {
+    task.dependsOn(project(stonecutter.current.project).tasks.named(subtaskName).get())
+}
+
+def chiseledDepends(Task task, String subtaskName, List<String> versions) {
+    chiseledDepends(task, subtaskName, versions.toArray(String[]::new))
+}
+
+def chiseledDepends(Task task, String subtaskName, String... versions) {
+    def setupTask = tasks.named("chiseledStonecutter").get()
+    task.dependsOn(setupTask)
+
+    versions.each {
+        def proj = rootProject.project(it)
         def subtask = proj.tasks.named(subtaskName).get()
         task.dependsOn(subtask)
         subtask.mustRunAfter(setupTask)
