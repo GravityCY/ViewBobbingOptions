@@ -29,7 +29,7 @@ import net.minecraft.client.DeltaTracker;
 public abstract class ViewBobbingMixin {
 
     @Shadow @Final
-    Minecraft minecraft;
+    private Minecraft minecraft;
 
     @ModifyVariable(
             method = "bobView",
@@ -50,8 +50,18 @@ public abstract class ViewBobbingMixin {
         };
     }
 
-    //? if >=1.20.5 {
+    //? if >=1.21.2 {
     @Inject(method = "renderItemInHand",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+    private void setHandBobType(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.HAND;
+    }
+    @Inject(method = "renderItemInHand", at = @At("TAIL"))
+    private void setFinishRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.NONE;
+    }
+    //?} elif >=1.20.5 {
+    /*@Inject(method = "renderItemInHand",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetProjectionMatrix(Lorg/joml/Matrix4f;)V"))
     private void setHandBobType(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.HAND;
@@ -60,7 +70,7 @@ public abstract class ViewBobbingMixin {
     private void setFinishRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
-    //?} elif >=1.20.3 {
+    *///?} elif >=1.20.3 {
     /*@Inject(method = "renderItemInHand",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetProjectionMatrix(Lorg/joml/Matrix4f;)V"))
     private void setHandBobType(PoseStack poseStack, Camera camera, float f, CallbackInfo ci) {

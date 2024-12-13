@@ -1,1 +1,1 @@
-- Updated to the most recent sodium
+- Updated to 1.21.2! (1.21.2, 1.21.3, 1.21.4)

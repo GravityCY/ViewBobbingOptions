@@ -6,7 +6,8 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id "idea"
+    id 'fabric-loom' version '1.9-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
