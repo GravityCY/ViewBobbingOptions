@@ -44,7 +44,7 @@ public class ViewBobbingOptions implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
             while (ADD_ITEM_BIND.consumeClick()) {
-                onAddItem(client.player);
+                this.onAddItem(client.player);
             }
         });
         VanillaOptions.init();
@@ -55,10 +55,10 @@ public class ViewBobbingOptions implements ClientModInitializer {
             if (handItem.isEmpty()) continue;
             String id = BuiltInRegistries.ITEM.getKey(handItem.getItem()).toString();
             if (ModConfig.INSTANCE.stationary_items.contains(id)) {
-                player.displayClientMessage(Component.translatable("messages.viewboboptions.remove_item", id), true);
+                player.displayClientMessage(Component.translatable("messages.viewboboptions.remove_item", handItem.getItemName()), true);
                 ModConfig.INSTANCE.stationary_items.remove(id);
             } else {
-                player.displayClientMessage(Component.translatable("messages.viewboboptions.add_item", id), true);
+                player.displayClientMessage(Component.translatable("messages.viewboboptions.add_item", handItem.getItemName()), true);
                 ModConfig.INSTANCE.stationary_items.add(id);
             }
             ModConfig.GSON.save();

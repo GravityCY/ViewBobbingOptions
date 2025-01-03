@@ -3,8 +3,8 @@
 
   "viewboboptions.add_item_bind": "Add Item",
 
-  "messages.viewboboptions.add_item": "Added Item '%s'",
-  "messages.viewboboptions.remove_item": "Removed Item '%s'",
+  "messages.viewboboptions.add_item": "§c§lDisabled §7bobbing for §b'§r%s§b'",
+  "messages.viewboboptions.remove_item": "§a§lEnabled §7bobbing for §b'§r%s§b'",
 
   "yacl.viewboboptions.title": "Custom View Bobbing",
 

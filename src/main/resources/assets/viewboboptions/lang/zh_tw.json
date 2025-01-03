@@ -3,8 +3,8 @@
 
   "viewboboptions.add_item_bind": "新增項目",
 
-  "messages.viewboboptions.add_item": "已新增項目「%s」",
-  "messages.viewboboptions.remove_item": "已移除項目「%s」",
+  "messages.viewboboptions.add_item": "§7已§c停用§7擺動效果 §b「§r%s§b」",
+  "messages.viewboboptions.remove_item": "§7已§a重新啟用§7擺動效果 §b「§r%s§b」",
 
   "yacl.viewboboptions.title": "自訂走路晃動",
 

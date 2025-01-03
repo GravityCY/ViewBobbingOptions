@@ -36,14 +36,17 @@ public abstract class ViewBobbingMixin {
             at = @At(value = "STORE", ordinal = 0),
             ordinal = 3)
     private float onBobView(float value) {
-        if (!ModConfig.INSTANCE.separate_bobs)
+        if (!ModConfig.INSTANCE.separate_bobs) {
+            if (this.minecraft.player != null && ViewBobbingOptions.isStationary(this.minecraft.player))
+                return ModConfig.INSTANCE.all_bobbing_strength != 0 ? value * 0.05f : 0f;
             return value * ModConfig.INSTANCE.all_bobbing_strength / 100f;
+        }
 
         return switch(TransientMixinData.CURRENT) {
             case NONE -> value;
             case HAND -> {
                 if (this.minecraft.player != null && ViewBobbingOptions.isStationary(this.minecraft.player))
-                    yield value * 0.05f;
+                    yield ModConfig.INSTANCE.hand_bobbing_strength != 0 ? value * 0.05f : 0f;
                 yield value * (ModConfig.INSTANCE.hand_bobbing_strength / 100f);
             }
             case CAMERA -> value * (ModConfig.INSTANCE.camera_bobbing_strength / 100f);
