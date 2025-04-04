@@ -27,7 +27,7 @@ public class ViewBobbingOptions implements ClientModInitializer {
     }
 
     public static boolean isStationary(LocalPlayer player) {
-        for (ItemStack handItem : player.getHandSlots()) {
+        for (ItemStack handItem : Helkper.getHandSlots(player)) {
             if (handItem.isEmpty()) continue;
             String id = BuiltInRegistries.ITEM.getKey(handItem.getItem()).toString();
             if (ModConfig.INSTANCE.stationary_items.contains(id))
@@ -58,7 +58,7 @@ public class ViewBobbingOptions implements ClientModInitializer {
     }
 
     private void onAddItem(LocalPlayer player) {
-        for (ItemStack handItem : player.getHandSlots()) {
+        for (ItemStack handItem : Helkper.getHandSlots(player)) {
             if (handItem.isEmpty()) continue;
             String id = BuiltInRegistries.ITEM.getKey(handItem.getItem()).toString();
             if (ModConfig.INSTANCE.stationary_items.contains(id)) {
