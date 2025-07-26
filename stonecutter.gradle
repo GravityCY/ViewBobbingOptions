@@ -3,7 +3,7 @@ plugins {
 }
 
 plugins.apply "dev.kikugie.stonecutter"
-stonecutter.active "1.21.5" /* [SC] DO NOT EDIT */
+stonecutter.active "1.21.6" /* [SC] DO NOT EDIT */
 
 Properties secrets = new Properties()
 rootProject.file("secrets.properties").withInputStream { secrets.load(it) }
@@ -29,6 +29,14 @@ stonecutter.registerChiseled tasks.register("chiseledPublish") {
 
     doLast {
         onPublish(webhookUrl, allVersions)
+    }
+}
+
+stonecutter.registerChiseled tasks.register("selectivePublish") {
+    setGroup "project"
+    chiseledDepends(it, "publishMod", "1.21.6")
+    doLast {
+        onPublish(webhookUrl, "1.21.6")
     }
 }
 

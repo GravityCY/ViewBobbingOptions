@@ -53,8 +53,18 @@ public abstract class ViewBobbingMixin {
         };
     }
 
-    //? if >=1.21.2 {
+    //? if >=1.21.6 {
     @Inject(method = "renderItemInHand",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+    private void setHandBobType(float f, boolean bl, Matrix4f matrix4f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.HAND;
+    }
+    @Inject(method = "renderItemInHand", at = @At("TAIL"))
+    private void setFinishRenderHand(float f, boolean bl, Matrix4f matrix4f, CallbackInfo ci) {
+        TransientMixinData.CURRENT = BobType.NONE;
+    }
+    //?} elif >=1.21.2 {
+    /*@Inject(method = "renderItemInHand",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
     private void setHandBobType(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.HAND;
@@ -63,7 +73,7 @@ public abstract class ViewBobbingMixin {
     private void setFinishRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
         TransientMixinData.CURRENT = BobType.NONE;
     }
-    //?} elif >=1.20.5 {
+    *///?} elif >=1.20.5 {
     /*@Inject(method = "renderItemInHand",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetProjectionMatrix(Lorg/joml/Matrix4f;)V"))
     private void setHandBobType(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {

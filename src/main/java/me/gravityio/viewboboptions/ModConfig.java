@@ -61,6 +61,14 @@ public class ModConfig {
                     .available(config.separate_bobs)
                     .build();
 
+            var handSwayStrength = Option.<Integer>createBuilder()
+                    .name(Component.translatable("yacl.viewboboptions.hand_sway_strength.label"))
+                    .description(OptionDescription.of(Component.translatable("yacl.viewboboptions.hand_sway_strength.description")))
+                    .customController(opt -> IntegerSliderControllerBuilder.create(opt).range(0, 100).step(1).build())
+                    .binding((int) defaults.hand_sway_strength, () -> (int) config.hand_sway_strength, v -> config.setHandSwayStrength(v.shortValue()))
+                    .available(config.separate_bobs)
+                    .build();
+
             var seperateBobs = Option.<Boolean>createBuilder()
                     .name(Component.translatable("yacl.viewboboptions.separate_bobs.label"))
                     .description(OptionDescription.of(Component.translatable("yacl.viewboboptions.separate_bobs.description")))
@@ -78,7 +86,8 @@ public class ModConfig {
                     .option(seperateBobs)
                     .option(viewBobbingStrength)
                     .option(handBobbingStrength)
-                    .option(cameraBobbingStrength);
+                    .option(cameraBobbingStrength)
+                    .option(handSwayStrength);
 
             builder.category(mainCategory.build());
             return builder;
@@ -97,6 +106,8 @@ public class ModConfig {
     public short hand_bobbing_strength = 100;
     @SerialEntry
     public short camera_bobbing_strength = 100;
+    @SerialEntry
+    public short hand_sway_strength = 100;
     @SerialEntry
     public Set<String> stationary_items = Util.make(() -> {
         var a = new HashSet<String>();
@@ -122,6 +133,11 @@ public class ModConfig {
     public void setCameraBobbingStrength(short camera_bobbing_strength){
         this.camera_bobbing_strength = camera_bobbing_strength;
         VanillaOptions.CAMERA_BOBBING_STRENGTH.set((int) camera_bobbing_strength);
+    }
+
+    public void setHandSwayStrength(short hand_sway_strength){
+        this.hand_sway_strength = hand_sway_strength;
+        VanillaOptions.HAND_SWAY_STRENGTH.set((int) hand_sway_strength);
     }
 
 }

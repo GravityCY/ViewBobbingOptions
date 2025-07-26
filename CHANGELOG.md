@@ -1,1 +1,1 @@
-- Updated to 1.21.5
+- Added hand sway slider | Controls how much the hand / item sways when rotating your camera.

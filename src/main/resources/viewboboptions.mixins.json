@@ -4,6 +4,7 @@
   "package": "me.gravityio.viewboboptions.mixin.mod",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "HandRendererMixin",
     "VideoOptionsScreenMixin",
     "ViewBobbingMixin"
   ],

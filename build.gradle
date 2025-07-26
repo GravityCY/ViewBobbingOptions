@@ -7,7 +7,7 @@ import java.net.http.HttpResponse
 
 plugins {
     id "idea"
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.23'
     id "me.gravityio.replacementplugin" version "0.0.7" // my local experimental plugin, just delete if you fork
@@ -89,6 +89,8 @@ dependencies {
 
     modCompileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version_api}"
     modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version_api}"
+
+    // Use these versions for compilation against the API
     modCompileOnly "maven.modrinth:sodium:${project.sodium_version_api}"
     modCompileOnly "maven.modrinth:iris:${project.iris_version_api}"
 

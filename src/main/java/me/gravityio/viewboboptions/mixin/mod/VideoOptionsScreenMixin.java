@@ -46,6 +46,8 @@ public abstract class VideoOptionsScreenMixin extends OptionsSubScreen {
             this.list.addBig(VanillaOptions.ALL_BOBBING_STRENGTH);
         }
 
+        this.list.addSmall(VanillaOptions.HAND_SWAY_STRENGTH, null);
+
     }
 
 }
