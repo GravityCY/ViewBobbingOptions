@@ -87,6 +87,14 @@ public class SodiumGeneralCategoryMixin {
             original.add(allOpt);
         }
 
+        var handSwayOpt = OptionImpl.createBuilder(int.class, storage)
+                .setName(Component.translatable("options.sodium.viewboboptions.hand_sway_strength.label"))
+                .setTooltip(Component.translatable("options.sodium.viewboboptions.hand_sway_strength.description"))
+                .setControl(opt -> new SliderControl(opt, 0, 100, 1, ControlValueFormatter.percentage()))
+                .setBinding((config, v) -> ModConfig.INSTANCE.setHandSwayStrength(v.shortValue()), config -> (int) ModConfig.INSTANCE.hand_sway_strength)
+                .build();
+        original.add(handSwayOpt);
+
         return original;
     }
 }

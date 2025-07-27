@@ -108,6 +108,15 @@ replacement {
     ]
 }
 
+tasks.named("build") {
+    doLast {
+        copy {
+            from "$buildDir/libs"
+            into "${rootProject.buildDir}/libs"
+        }
+    }
+}
+
 tasks.register("depVersions") {
     doLast {
         def projects = ["fabric-api", "modmenu", "yacl", "sodium", "iris"]
