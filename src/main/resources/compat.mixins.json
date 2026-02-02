@@ -4,8 +4,7 @@
   "package": "me.gravityio.viewboboptions.mixin.compat",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "IrisHandRendererMixin",
-    "SodiumGeneralCategoryMixin"
+    "IrisHandRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

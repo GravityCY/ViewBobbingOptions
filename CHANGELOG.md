@@ -1,1 +1,1 @@
-- Added hand sway slider | Controls how much the hand / item sways when rotating your camera.
+- The slider controls are no longer in the vanilla / sodium video options and have been moved to the accessibility options page

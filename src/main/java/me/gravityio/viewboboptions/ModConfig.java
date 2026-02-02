@@ -9,9 +9,14 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+//? if >=1.21.11 {
+import net.minecraft.util.Util;
+//?} else {
+/*import net.minecraft.Util;
+*///?}
 
 import java.util.HashSet;
 import java.util.Set;

@@ -7,25 +7,40 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//? if >=1.21.11 {
+import net.minecraft.resources.Identifier;
+//?} else {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
+
 public class ViewBobbingOptions implements ClientModInitializer {
     public static final String MOD_ID = "viewboboptions";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final KeyMapping ADD_ITEM_BIND = new KeyMapping("viewboboptions.add_item_bind", GLFW.GLFW_KEY_Z, "category.viewboboptions.name");
+    //? if >=1.21.9 {
+    private static final KeyMapping.Category OPTION_CATEGORY = KeyMapping.Category.register(ViewBobbingOptions.id("category.viewboboptions.name"));
+    private static final KeyMapping ADD_ITEM_BIND = new KeyMapping("viewboboptions.add_item_bind", GLFW.GLFW_KEY_Z, OPTION_CATEGORY);
+    //?} else {
+    /*private static final KeyMapping ADD_ITEM_BIND = new KeyMapping("viewboboptions.add_item_bind", GLFW.GLFW_KEY_Z, "category.viewboboptions.name");
+    *///?}
 
-    public static ResourceLocation id(String path) {
-        //? if >=1.21 {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
-        //?} else {
-        /*return new ResourceLocation(MOD_ID, path);
-        *///?}
+    //? if >=1.21.11 {
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
-
+    //?} else {
+    /*public static ResourceLocation id(String path) {
+        //? if >=1.21 {
+        /^return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        ^///?} else {
+        return new ResourceLocation(MOD_ID, path);
+        //?}
+    }
+    *///?}
     public static boolean isStationary(LocalPlayer player) {
         for (ItemStack handItem : Helkper.getHandSlots(player)) {
             if (handItem.isEmpty()) continue;

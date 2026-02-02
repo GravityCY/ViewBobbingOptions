@@ -3,33 +3,28 @@ package me.gravityio.viewboboptions.mixin.mod;
 import me.gravityio.viewboboptions.ModConfig;
 import me.gravityio.viewboboptions.VanillaOptions;
 import net.minecraft.client.Options;
-import net.minecraft.client.gui.components.OptionsList;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.*;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+
 //? if >=1.21 {
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
-import net.minecraft.client.gui.screens.options.VideoSettingsScreen;
+import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
 //?} else {
-/*import net.minecraft.client.gui.screens.VideoSettingsScreen;
-import net.minecraft.client.gui.screens.OptionsSubScreen;
+/*import net.minecraft.client.gui.screens.AccessibilityOptionsScreen;
+import net.minecraft.client.gui.screens.SimpleOptionsSubScreen;
+import net.minecraft.client.OptionInstance;
 *///?}
 
-@Mixin(VideoSettingsScreen.class)
-public abstract class VideoOptionsScreenMixin extends OptionsSubScreen {
+@Mixin(AccessibilityOptionsScreen.class)
+public abstract class AccessibilityOptionsScreenMixin extends /*? if >=1.21 {*/OptionsSubScreen /*?} else {*//*SimpleOptionsSubScreen*//*?}*/ {
 
-    //? if <=1.20.5 {
-    /*@Shadow private OptionsList list;
-    *///?}
-
-
-    public VideoOptionsScreenMixin(Screen parent, Options gameOptions, Component title) {
-        super(parent, gameOptions, title);
+    public AccessibilityOptionsScreenMixin(Screen screen, Options options, Component component /*? if <1.21 {*//*,OptionInstance<?>[] optionInstances *//*?}*/) {
+        super(screen, options, component/*? if <1.21 {*//*, optionInstances *//*?}*/);
     }
 
     //? if >=1.21 {

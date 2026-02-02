@@ -31,7 +31,30 @@ public abstract class ViewBobbingMixin {
     @Shadow @Final
     private Minecraft minecraft;
 
+    //? if >=1.21.9 {
     @ModifyVariable(
+            method = "bobView",
+            at = @At(value = "STORE", ordinal = 0),
+            ordinal = 2)
+    private float onBobView(float value) {
+        if (!ModConfig.INSTANCE.separate_bobs) {
+            if (this.minecraft.player != null && ViewBobbingOptions.isStationary(this.minecraft.player))
+                return ModConfig.INSTANCE.all_bobbing_strength != 0 ? value * 0.05f : 0f;
+            return value * ModConfig.INSTANCE.all_bobbing_strength / 100f;
+        }
+
+        return switch(TransientMixinData.CURRENT) {
+            case NONE -> value;
+            case HAND -> {
+                if (this.minecraft.player != null && ViewBobbingOptions.isStationary(this.minecraft.player))
+                    yield ModConfig.INSTANCE.hand_bobbing_strength != 0 ? value * 0.05f : 0f;
+                yield value * (ModConfig.INSTANCE.hand_bobbing_strength / 100f);
+            }
+            case CAMERA -> value * (ModConfig.INSTANCE.camera_bobbing_strength / 100f);
+        };
+    }
+    //?} else {
+    /*@ModifyVariable(
             method = "bobView",
             at = @At(value = "STORE", ordinal = 0),
             ordinal = 3)
@@ -52,6 +75,7 @@ public abstract class ViewBobbingMixin {
             case CAMERA -> value * (ModConfig.INSTANCE.camera_bobbing_strength / 100f);
         };
     }
+    *///?}
 
     //? if >=1.21.6 {
     @Inject(method = "renderItemInHand",
